@@ -14,4 +14,4 @@ El Frontend de Librio está construido con las siguientes tecnologías clave, en
 | **Rutas** | **React Router** | Manejo de la navegación y rutas en la aplicación. |
 | **Gestor de Paquetes** | **npm** | Herramienta para gestionar las dependencias del proyecto. |
 | **Estado** | Redux Toolkit | Gestión de estado predecible y centralizada (Si aplica). |
-| **Peticiones** | Axios | Cliente HTTP para la comunicación con la API. |
+| **Peticiones** | Axios | Cliente HTTP para la comunicación con la API. | 
