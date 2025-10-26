@@ -1,7 +1,7 @@
 
+## 💻 Librio Frontend: Marketplace de Libros
 
 <img width="408" height="612" alt="LOGO-removebg-preview (1)" src="https://github.com/user-attachments/assets/2c616ce9-44e4-4e2d-9d84-0899c6a74cb9" />
-## 💻 Librio Frontend: Marketplace de Libros
 
 Bienvenido al repositorio del **Frontend** de **Librio**, la interfaz de usuario de nuestro marketplace de libros. Este proyecto se encarga de la presentación visual y la interacción del usuario, comunicándose con la API de Backend para gestionar los datos de libros, usuarios y transacciones.
 
