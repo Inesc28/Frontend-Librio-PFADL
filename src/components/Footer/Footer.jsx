@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import './styles/Footer.css';
+import './Footer.css';
 
 /**
  * Componente de pie de página

@@ -14,6 +14,7 @@ import {
     Col,         // Columna del grid system
     Image        // Componente de imagen responsiva
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';  // Para navegación
 import { Navbar, Footer } from '../../components';  // Componentes modulares
 import './home.css';
 
@@ -24,32 +25,23 @@ import './home.css';
 const Home = () => {
     return (
         <div className="home-container">
-            {/* ====== BARRA DE NAVEGACIÓN ====== */}
-            {/* Componente Navbar modular */}
+          
             <Navbar />
 
-            {/* ====== SECCIÓN HERO ====== */}
-            {/* 
-                Sección principal con mensaje de bienvenida y call-to-action
-                - hero-section: Clase CSS para estilos personalizados
-            */}
+        
             <section className="hero-section">
                 <Container>
                     {/* Grid responsivo centrado */}
                     <Row className="justify-content-center text-center">
-                        {/* 
-                            Columna responsiva:
-                            - lg={10}: 10/12 columnas en pantallas grandes
-                            - xl={8}: 8/12 columnas en pantallas extra grandes
-                        */}
+                        
                         <Col lg={10} xl={8}>
-                            {/* Título principal de la aplicación */}
+                           
                             <h1 className="hero-title">
                                 "Encuentra tu próxima gran lectura. Donde cada libro tiene una nueva historia que contar."
                             </h1>
 
                       
-                            <Button size="lg" className="cta-button">
+                            <Button size="lg" className="cta-button" as={Link} to="/iniciar-sesion">
                                 Empezar
                             </Button>
                         </Col>
@@ -58,17 +50,10 @@ const Home = () => {
             </section>
 
             {/* ====== GALERÍA DE LIBROS ====== */}
-            {/* 
-                Sección que muestra una galería visual de libros
-                - books-gallery: Clase CSS para fondo con gradiente
-                - py-5: Padding vertical de Bootstrap (3rem top/bottom)
-            */}
+       
             <section className="books-gallery py-5">
                 <Container>
-                    {/* 
-                        Grid responsivo con gap entre elementos
-                        - g-3: Gap de 1rem entre columnas
-                    */}
+                   
                     <Row className="g-3">
 
                         {/* ===== PRIMERA FILA ===== */}
@@ -96,7 +81,7 @@ const Home = () => {
 
                         {/* ===== SEGUNDA FILA - TRES IMÁGENES ===== */}
                         {/* Pila de libros izquierda */}
-                        <Col lg={4} md={4} xs={12}>
+                        <Col lg={4} md={4} xs={12}> /* */
                             <Image
                                 src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                                 alt="Pila de libros"
@@ -154,8 +139,7 @@ const Home = () => {
                 </Container>
             </section>
 
-            {/* ====== FOOTER ====== */}
-            {/* Componente Footer modular */}
+            
             <Footer />
         </div>
     );

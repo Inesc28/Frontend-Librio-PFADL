@@ -7,7 +7,8 @@
 
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import './styles/Navbar.css';
+import { Link } from 'react-router-dom';
+import './Navbar.css';
 
 /**
  * Componente de barra de navegación
@@ -18,7 +19,7 @@ const CustomNavbar = () => {
         <Navbar expand="lg" className="custom-navbar" fixed="top">
             <Container>
                 {/* Logo y marca de la aplicación */}
-                <Navbar.Brand href="#home" className="d-flex align-items-center">
+                <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                     <div className="logo-icon me-2">
                         {/* Logo cargado desde carpeta public/images */}
                         <img src="/images/logo.PNG" alt="Librio Logo" className="logo-image" />
@@ -28,13 +29,13 @@ const CustomNavbar = () => {
 
                 {/* Botón hamburguesa para móviles */}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                
+
                 {/* Menú de navegación colapsable */}
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav>
-                        <Nav.Link href="#inicio" className="custom-nav-link active">Inicio</Nav.Link>
+                        <Nav.Link as={Link} to="/" className="custom-nav-link">Inicio</Nav.Link>
                         <Nav.Link href="#registro" className="custom-nav-link">Registrate</Nav.Link>
-                        <Nav.Link href="#iniciar-sesion" className="custom-nav-link">Iniciar Sesión</Nav.Link>
+                        <Nav.Link as={Link} to="/iniciar-sesion" className="custom-nav-link">Iniciar Sesión</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
