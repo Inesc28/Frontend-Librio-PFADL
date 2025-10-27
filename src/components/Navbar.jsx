@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import './Navbar.css';
+import './styles/Navbar.css';
 
 /**
  * Componente de barra de navegación
