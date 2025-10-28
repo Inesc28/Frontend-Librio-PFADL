@@ -78,22 +78,23 @@
 
 /* Campos de textarea específicos */
 .publicar-input[as="textarea"] {
-  resize: vertical !important;         /* Solo redimensionar verticalmente */
-  min-height: 80px !important;         /* Altura mínima */
+  resize: vertical !important;         
+  min-height: 80px !important;       
 }
 
 /* ====== BOTÓN DE PUBLICAR ====== */
 .publicar-button {
-  background: linear-gradient(135deg, #8b5a8c, #a67ba6) !important; /* Gradiente morado */
-  border: none !important;                                          /* Sin borde */
-  border-radius: 12px;                                             /* Bordes redondeados */
-  padding: 1rem 3rem;                                              /* Padding generoso */
-  font-size: 1.2rem;                                               /* Fuente más grande */
-  font-weight: 600;                                                /* Peso semi-bold */
-  letter-spacing: 0.5px;                                           /* Espaciado entre letras */
-  transition: all 0.3s ease;                                       /* Transición suave */
-  box-shadow: 0 6px 20px rgba(139, 90, 140, 0.4);                /* Sombra prominente */
-  min-width: 200px;                                                /* Ancho mínimo */
+  background:white; /* Gradiente morado */
+  color:black;
+  border: none !important;                                         
+  border-radius: 12px;                                             
+  padding: 1rem 3rem;                                              
+  font-size: 1.2rem;                                              
+  font-weight: 600;                                                
+  letter-spacing: 0.5px;                                          
+  transition: all 0.3s ease;                                       
+  box-shadow: 0 6px 20px rgba(139, 90, 140, 0.4);                
+  min-width: 200px;                                              
 }
 
 /* Estado hover del botón */
