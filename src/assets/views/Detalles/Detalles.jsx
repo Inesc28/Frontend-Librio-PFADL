@@ -106,8 +106,8 @@ const Detalles = () => {
             {/* ====== BOTÓN DE VOLVER ====== */}
             <Row className="mb-4">
               <Col>
-                <Button 
-                  variant="outline-light" 
+                <Button
+                  variant="outline-light"
                   onClick={handleVolver}
                   className="detalles-btn-volver"
                 >
@@ -184,7 +184,7 @@ const Detalles = () => {
 
                       {/* Botón agregar al carrito */}
                       <div className="detalles-acciones">
-                        <Button 
+                        <Button
                           className="detalles-btn-carrito"
                           onClick={handleAgregarAlCarrito}
                           size="lg"
