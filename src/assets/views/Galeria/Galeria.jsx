@@ -9,6 +9,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,    // Contenedor responsivo de Bootstrap
   Row,         // Fila del grid system
@@ -28,13 +29,14 @@ import './Galeria.css';
  */
 const Galeria = () => {
 
-  // ====== CONTEXTO DE LIBROS ======
+  // ====== CONTEXTO Y NAVEGACIÓN ======
   const { 
     libros, 
     isLoading, 
     error, 
     obtenerLibros
   } = useLibros();
+  const navigate = useNavigate();
 
   // ====== CARGAR DATOS AL MONTAR EL COMPONENTE ======
   /**
@@ -59,11 +61,11 @@ const Galeria = () => {
 
   /**
    * Maneja el clic en el botón "Ver Detalles"
+   * Navega a la página de detalles del libro seleccionado
    * @param {string} libroId - ID del libro seleccionado
    */
   const handleVerDetalles = (libroId) => {
-    // TODO: Implementar navegación a página de detalles del libro
-    console.log('Ver detalles del libro ID:', libroId);
+    navigate(`/detalles/${libroId}`);
   };
 
   return (
