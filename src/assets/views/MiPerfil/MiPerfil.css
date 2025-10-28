@@ -24,7 +24,7 @@
 
 /* ====== TARJETA DEL PERFIL ====== */
 .perfil-card {
-  background: rgba(45, 27, 61, 0.9);   /* Fondo morado traslúcido - consistente */
+  background:#4a1942;   /* Fondo morado traslúcido - consistente */
   border: none;                        /* Sin borde */
   border-radius: 20px;                 /* Bordes redondeados más pronunciados */
   backdrop-filter: blur(15px);         /* Efecto blur para profundidad */

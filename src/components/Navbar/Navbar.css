@@ -5,15 +5,7 @@
  * 
  * Estilos específicos para el componente Navbar.
  * Incluye logo, navegación y menú hamburguesa.
- * Todos los estilos tienen alta especificidad para evitar conflictos.
  */
-
-/* ====== RESET DE ESTILOS PARA CONSISTENCIA ====== */
-/* Asegurar que el navbar no herede estilos externos */
-.custom-navbar,
-.custom-navbar * {
-  font-family: 'Arial', sans-serif !important; /* Fuente consistente en todo el navbar */
-}
 
 /* ====== ESTILOS DE NAVEGACIÓN ====== */
 /* Navbar personalizada sobre Bootstrap */
@@ -48,64 +40,54 @@
 
 /* Texto del logo "LIBRIO" */
 .custom-navbar .logo-text {
-  font-size: 1.5rem !important;    /* Tamaño grande para el texto */
-  font-weight: bold !important;    /* Texto en negrita */
-  font-family: 'Arial', sans-serif !important; /* Fuente específica */
-  color: #d4a5d4 !important;       /* Color morado claro */
-  text-decoration: none !important; /* Sin subrayado */
-  line-height: 1.2 !important;     /* Altura de línea consistente */
-  letter-spacing: 1px !important;  /* Espaciado entre letras para el logo */
+  font-size: 1.5rem ;    /* Tamaño grande para el texto */
+  font-weight: bold;    /* Texto en negrita */
+  font-family: 'Arial', sans-serif ; /* Fuente específica */
+  color: #d4a5d4 ;       /* Color morado claro */
+  text-decoration: none; /* Sin subrayado */
+  line-height: 1.2;     /* Altura de línea consistente */
+  letter-spacing: 1px;  /* Espaciado entre letras para el logo */
 }
 
 /* ====== ENLACES DE NAVEGACIÓN ====== */
 .custom-navbar .custom-nav-link {
-  color: white !important;          /* Color blanco para enlaces */
-  font-size: 1.1rem !important;    /* Tamaño de fuente ligeramente mayor */
-  font-weight: 500 !important;     /* Peso medio */
-  font-style: italic !important;   /* Texto en cursiva */
-  font-family: 'Arial', sans-serif !important; /* Fuente específica */
-  line-height: 1.4 !important;     /* Altura de línea consistente */
-  letter-spacing: 0.3px !important; /* Espaciado entre letras */
-  transition: color 0.3s ease;     /* Transición suave para hover */
-  margin: 0 0.5rem;                /* Margen horizontal entre enlaces */
-  text-transform: none !important; /* Sin transformación de texto */
+  color: white;         
+  font-size: 1.1rem;   
+  font-weight: 500; 
+  font-style: italic;  
+  font-family: 'Arial', sans-serif; 
+  line-height: 1.4 ;    
+  letter-spacing: 0.3px ; 
+  transition: color 0.3s ease;    
+  margin: 0 0.5rem;               
+  text-transform: none ; 
 }
 
 /* Estados hover y activo de los enlaces */
 .custom-navbar .custom-nav-link:hover,
 .custom-navbar .custom-nav-link.active {
-  color: #d4a5d4 !important;        /* Color morado claro al pasar mouse o estar activo */
-  font-size: 1.1rem !important;     /* Mantener tamaño en hover */
-  font-weight: 500 !important;      /* Mantener peso en hover */
-  font-style: italic !important;    /* Mantener cursiva en hover */
+  color: #d4a5d4;
+  font-size: 1.1rem ;    
+  font-weight: 500 ;     
+  font-style: italic ;   
 }
 
-/* Evita decoración en el brand del navbar */
-.custom-navbar .navbar-brand:hover {
-  text-decoration: none !important; /* Sin subrayado al hacer hover */
-}
 
-/* Asegurar consistencia en todos los elementos del navbar */
-.custom-navbar .navbar-brand:hover .logo-text {
-  font-size: 1.5rem !important;    /* Mantener tamaño en hover */
-  font-weight: bold !important;    /* Mantener peso en hover */
-  color: #d4a5d4 !important;       /* Mantener color en hover */
-}
+
+
+
 
 /* ====== MENÚ HAMBURGUESA ====== */
 /* Botón toggle para dispositivos móviles */
 .navbar-toggler {
-  border: none !important;                          /* Sin borde */
-  padding: 0.25rem 0.5rem;                         /* Padding interno */
-  font-size: 1.25rem;                              /* Tamaño de fuente */
-  background: rgba(139, 90, 140, 0.3) !important;  /* Fondo morado semi-transparente */
-  border-radius: 8px;                              /* Bordes redondeados */
+  border: none !important;                          
+  padding: 0.25rem 0.5rem;                        
+  font-size: 1.25rem;                             
+  background: rgba(139, 90, 140, 0.3) !important;  
+  border-radius: 8px;                             
 }
 
-/* Elimina el outline de enfoque */
-.navbar-toggler:focus {
-  box-shadow: none !important;      /* Sin sombra de enfoque */
-}
+
 
 /* Icono personalizado del menú hamburguesa */
 .navbar-toggler-icon {
@@ -116,26 +98,26 @@
 }
 
 /* ====== ESTILOS MÓVILES ====== */
-/* Media query para pantallas menores a 992px (breakpoint lg de Bootstrap) */
+/* Media query para pantallas menores a 992px  */
 @media (max-width: 991.98px) {
   /* Menú colapsado en móviles */
   .navbar-collapse {
-    background: rgba(0, 0, 0, 0.9);     /* Fondo negro semi-transparente */
-    backdrop-filter: blur(10px);        /* Efecto blur */
-    border-radius: 8px;                 /* Bordes redondeados */
-    margin-top: 1rem;                   /* Margen superior */
-    padding: 1rem;                      /* Padding interno */
+    background: rgba(0, 0, 0, 0.9);     
+    backdrop-filter: blur(10px);       
+    border-radius: 8px;                 
+    margin-top: 1rem;                   
+    padding: 1rem;                     
   }
   
   /* Enlaces en móviles - formato vertical */
   .custom-navbar .custom-nav-link {
-    padding: 0.5rem 0;                                  /* Padding vertical */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea separadora */
-    margin: 0;                                          /* Sin margen */
-    display: block;                                     /* Formato de bloque */
-    font-size: 1.1rem !important;                      /* Mantener tamaño en móviles */
-    font-weight: 500 !important;                       /* Mantener peso en móviles */
-    font-style: italic !important;                     /* Mantener cursiva en móviles */
+    padding: 0.5rem 0;                                  
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    margin: 0;                                          
+    display: block;                                     
+    font-size: 1.1rem !important;                      
+    font-weight: 500 !important;                       
+    font-style: italic !important;                    
   }
   
   /* Último enlace sin borde inferior */

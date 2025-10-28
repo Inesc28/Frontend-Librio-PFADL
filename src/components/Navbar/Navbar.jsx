@@ -20,7 +20,7 @@ const CustomNavbar = () => {
     // TODO: Este estado debería venir de un contexto de autenticación global
     // Por ahora usamos un estado local para demostración
     // TESTING: Cambiar a 'true' para ver las opciones de usuario autenticado
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
 
     /**
      * Maneja el cierre de sesión
