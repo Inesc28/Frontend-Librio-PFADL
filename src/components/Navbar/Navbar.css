@@ -5,7 +5,15 @@
  * 
  * Estilos específicos para el componente Navbar.
  * Incluye logo, navegación y menú hamburguesa.
+ * Todos los estilos tienen alta especificidad para evitar conflictos.
  */
+
+/* ====== RESET DE ESTILOS PARA CONSISTENCIA ====== */
+/* Asegurar que el navbar no herede estilos externos */
+.custom-navbar,
+.custom-navbar * {
+  font-family: 'Arial', sans-serif !important; /* Fuente consistente en todo el navbar */
+}
 
 /* ====== ESTILOS DE NAVEGACIÓN ====== */
 /* Navbar personalizada sobre Bootstrap */
@@ -39,32 +47,49 @@
 }
 
 /* Texto del logo "LIBRIO" */
-.logo-text {
-  font-size: 1.5rem;                /* Tamaño grande para el texto */
-  font-weight: bold;               /* Texto en negrita */
+.custom-navbar .logo-text {
+  font-size: 1.5rem !important;    /* Tamaño grande para el texto */
+  font-weight: bold !important;    /* Texto en negrita */
+  font-family: 'Arial', sans-serif !important; /* Fuente específica */
   color: #d4a5d4 !important;       /* Color morado claro */
-  text-decoration: none;           /* Sin subrayado */
+  text-decoration: none !important; /* Sin subrayado */
+  line-height: 1.2 !important;     /* Altura de línea consistente */
+  letter-spacing: 1px !important;  /* Espaciado entre letras para el logo */
 }
 
 /* ====== ENLACES DE NAVEGACIÓN ====== */
-.custom-nav-link {
+.custom-navbar .custom-nav-link {
   color: white !important;          /* Color blanco para enlaces */
-  font-size: 1.1rem;               /* Tamaño de fuente ligeramente mayor */
-  font-weight: 500;                /* Peso medio */
-  font-style: italic;              /* Texto en cursiva */
+  font-size: 1.1rem !important;    /* Tamaño de fuente ligeramente mayor */
+  font-weight: 500 !important;     /* Peso medio */
+  font-style: italic !important;   /* Texto en cursiva */
+  font-family: 'Arial', sans-serif !important; /* Fuente específica */
+  line-height: 1.4 !important;     /* Altura de línea consistente */
+  letter-spacing: 0.3px !important; /* Espaciado entre letras */
   transition: color 0.3s ease;     /* Transición suave para hover */
   margin: 0 0.5rem;                /* Margen horizontal entre enlaces */
+  text-transform: none !important; /* Sin transformación de texto */
 }
 
 /* Estados hover y activo de los enlaces */
-.custom-nav-link:hover,
-.custom-nav-link.active {
+.custom-navbar .custom-nav-link:hover,
+.custom-navbar .custom-nav-link.active {
   color: #d4a5d4 !important;        /* Color morado claro al pasar mouse o estar activo */
+  font-size: 1.1rem !important;     /* Mantener tamaño en hover */
+  font-weight: 500 !important;      /* Mantener peso en hover */
+  font-style: italic !important;    /* Mantener cursiva en hover */
 }
 
 /* Evita decoración en el brand del navbar */
-.navbar-brand:hover {
-  text-decoration: none;            /* Sin subrayado al hacer hover */
+.custom-navbar .navbar-brand:hover {
+  text-decoration: none !important; /* Sin subrayado al hacer hover */
+}
+
+/* Asegurar consistencia en todos los elementos del navbar */
+.custom-navbar .navbar-brand:hover .logo-text {
+  font-size: 1.5rem !important;    /* Mantener tamaño en hover */
+  font-weight: bold !important;    /* Mantener peso en hover */
+  color: #d4a5d4 !important;       /* Mantener color en hover */
 }
 
 /* ====== MENÚ HAMBURGUESA ====== */
@@ -103,15 +128,18 @@
   }
   
   /* Enlaces en móviles - formato vertical */
-  .custom-nav-link {
+  .custom-navbar .custom-nav-link {
     padding: 0.5rem 0;                                  /* Padding vertical */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea separadora */
     margin: 0;                                          /* Sin margen */
     display: block;                                     /* Formato de bloque */
+    font-size: 1.1rem !important;                      /* Mantener tamaño en móviles */
+    font-weight: 500 !important;                       /* Mantener peso en móviles */
+    font-style: italic !important;                     /* Mantener cursiva en móviles */
   }
   
   /* Último enlace sin borde inferior */
-  .custom-nav-link:last-child {
+  .custom-navbar .custom-nav-link:last-child {
     border-bottom: none;
   }
 }
