@@ -37,119 +37,169 @@
     margin-bottom: 0;                    
 }
 
-/* ====== TARJETAS DE LIBROS ====== */
-.galeria-card {
-    background: rgba(74, 25, 66, 0.9);   
-    border: 1px solid rgba(212, 165, 212, 0.3); 
-    border-radius: 15px;                  
-    backdrop-filter: blur(10px);         
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
-    transition: all 0.3s ease;          
-    overflow: hidden;                     
+/* ====== CONTENEDOR CON FONDO PARA LAS CARDS ====== */
+.galeria-cards-container {
+    background-color: #4a1942;          
+    border-radius: 25px;                 
+    padding: 3rem 2rem;                  
+    margin-top: 2rem;                    
+    box-shadow: 0 10px 30px rgba(137, 49, 104, 0.3); 
 }
 
-.galeria-card:hover {
-    transform: translateY(-5px);          /* Elevación sutil al hacer hover */
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
-    border-color: rgba(212, 165, 212, 0.6); /* Borde más visible */
-}
-
-/* ====== IMAGEN DEL LIBRO ====== */
-.galeria-imagen-container {
-    height: 200px;                        /* Altura fija para consistencia */
-    overflow: hidden;                     /* Ocultar partes que se desborden */
-    display: flex;                        
-    align-items: center;                  
-    justify-content: center;              
-    background: linear-gradient(135deg, #2d1b3d, #4a1942); /* Gradiente de fondo */
-}
-
-.galeria-imagen {
-    width: 100%;                          
-    height: 100%;                        
-    object-fit: cover;                   
-    transition: transform 0.3s ease;     
-}
-
-.galeria-card:hover .galeria-imagen {
-    transform: scale(1.05);               /* Zoom sutil en la imagen al hover */
-}
-
-/* ====== CONTENIDO DE LA TARJETA ====== */
-.galeria-libro-titulo {
-    color: #d4a5d4;                      
-    font-size: 1.1rem;                  
-    font-weight: bold;                  
-    margin-bottom: 0.75rem;              
-    line-height: 1.3;                     
-    /* display: -webkit-box;                 Configuración para truncar texto */
-    /* -webkit-line-clamp: 2; */
-    /* -webkit-box-orient: vertical;         Orientación vertical */
-    overflow: hidden;                     /* Ocultar texto excedente */
-}
-
-/* ====== INFORMACIÓN DEL LIBRO ====== */
-.galeria-info {
-    color: rgba(255, 255, 255, 0.9);     /* Blanco casi opaco */
-}
-
-.galeria-autor,
-.galeria-editorial,
-.galeria-año {
-    font-size: 0.85rem;                   
-    color: rgba(255, 255, 255, 0.8);     
-}
-
-.galeria-genero {
-    background: linear-gradient(135deg, #8b5a8c, #d4a5d4) !important; /* Gradiente morado */
-    border: none;                         
-    font-size: 0.7rem;                    
-    padding: 0.25rem 0.5rem;             
-}
-
-/* ====== DESCRIPCIÓN ====== */
-.galeria-descripcion {
-    color: rgba(255, 255, 255, 0.7);     
-    font-size: 0.85rem;                   
-    line-height: 1.4;                    
-    margin-bottom: 1rem;                  
-    flex-grow: 1;                         
-}
-
-/* ====== PRECIO ====== */
-.galeria-precio {
-    text-align: center;                   
-    margin-bottom: 1rem;                 
-}
-
-.precio-valor {
-    background: linear-gradient(135deg, #8b5a8c, #d4a5d4); /* Gradiente morado */
-    color: white;                         /* Texto blanco */
-    padding: 0.5rem 1rem;                 /* Espaciado interno */
-    border-radius: 20px;                  /* Bordes muy redondeados */
-    font-weight: bold;                    /* Peso negrita */
-    font-size: 1.1rem;                    /* Tamaño ligeramente mayor */
-    display: inline-block;                /* Display inline-block para padding */
-    box-shadow: 0 4px 15px rgba(139, 90, 140, 0.4); /* Sombra morada */
-}
-
-/* ====== BOTÓN DE ACCIÓN ====== */
-.galeria-botones {
-    display: flex;                        /* Flexbox para alineación */
-    justify-content: center;              /* Centrar el botón */
-}
-
-.galeria-botones .btn {
-    font-size: 0.8rem;                    /* Tamaño de fuente pequeño */
-    padding: 0.4rem 1.2rem;               /* Espaciado interno más generoso */
-    border-radius: 20px;                  /* Bordes redondeados */
+/* ====== TARJETAS DE LIBROS NUEVO DISEÑO ====== */
+.galeria-card-nueva {
+    border: none;                        
+    background: transparent;              
+    border-radius: 20px;                 
+    overflow: hidden;                     /* Ocultar contenido desbordado */
     transition: all 0.3s ease;            /* Transición suave */
-    min-width: 120px;                     /* Ancho mínimo para consistencia */
 }
 
-.galeria-botones .btn:hover {
-    transform: translateY(-2px);          /* Elevación sutil al hover */
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2); /* Sombra más pronunciada */
+.galeria-card-nueva:hover {
+    transform: translateY(-8px);          /* Elevación al hacer hover */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); 
+}
+
+/* ====== CONTENEDOR DE IMAGEN NUEVA (TAMAÑO REDUCIDO) ====== */
+.galeria-imagen-nueva {
+    position: relative;                   /* Posición relativa para overlay */
+    height: 280px;                        /* Altura reducida para 3 columnas */
+    border-radius: 15px;                  
+    overflow: hidden;                     
+    background: linear-gradient(135deg, #2d1b3d, #4a1942); 
+}
+
+.galeria-img {
+    width: 100%;
+    height: 100%;                         
+    object-fit: cover;                    
+    border-radius: 20px;                  
+    transition: transform 0.3s ease;      /* Transición para zoom */
+}
+
+.galeria-card-nueva:hover .galeria-img {
+    transform: scale(1.05);               /* Zoom sutil al hover */
+}
+
+/* ====== OVERLAY CON INFORMACIÓN ====== */
+.galeria-overlay {
+    position: absolute;                   /* Posición absoluta sobre la imagen */
+    bottom: 0;                            
+    left: 0;                              
+    right: 0;                             
+    background: linear-gradient(
+        to top, 
+        rgba(0, 0, 0, 0.9) 0%, 
+        rgba(0, 0, 0, 0.7) 50%, 
+        transparent 100%
+    );                                    
+    padding: 1.2rem 1rem 1rem;           /* Padding reducido para tarjetas más pequeñas */
+    text-align: center;                   
+    color: white;                        
+}
+
+/* ====== TÍTULO DEL LIBRO NUEVO (REDUCIDO) ====== */
+.galeria-titulo-nuevo {
+    font-size: 1.1rem;                   /* Tamaño reducido para más tarjetas */
+    font-weight: bold;                   
+    color: white;                        
+    margin-bottom: 0.7rem;               
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+}
+
+/* ====== PRECIO DESTACADO (REDUCIDO) ====== */
+.galeria-precio-nuevo {
+    font-size: 1.4rem;                    /* Tamaño reducido para tarjetas más pequeñas */
+    font-weight: bold;                   
+    color: #d4a5d4;                       
+    margin-bottom: 1rem;                
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+}
+
+/* ====== BOTÓN VER MÁS (REDUCIDO) ====== */
+.galeria-btn-ver-mas {
+    background: linear-gradient(135deg, #8b5a8c, #d4a5d4); 
+    border: none;                         
+    color: white;                        
+    padding: 0.5rem 1.5rem;              
+    font-size: 0.9rem;                    
+    font-weight: 600;                    
+    border-radius: 20px;                 
+    text-transform: lowercase;           
+    transition: all 0.3s ease;            
+    box-shadow: 0 4px 15px rgba(139, 90, 140, 0.4); 
+}
+
+.galeria-btn-ver-mas:hover {
+    background: linear-gradient(135deg, #a066a3, #e6c1e6); 
+    transform: translateY(-3px);          
+    box-shadow: 0 8px 25px rgba(139, 90, 140, 0.6); 
+    color: white;                         
+}
+
+/* ====== RESPONSIVIDAD PARA DISEÑO DE 3 COLUMNAS ====== */
+@media (max-width: 768px) {
+    .galeria-imagen-nueva {
+        height: 250px;                    /* Altura aún más reducida en tablet */
+    }
+    
+    .galeria-titulo-nuevo {
+        font-size: 1rem;                  /* Título más pequeño en tablet */
+    }
+    
+    .galeria-precio-nuevo {
+        font-size: 1.2rem;                /* Precio más pequeño en tablet */
+        margin-bottom: 0.8rem;            /* Menos margen */
+    }
+    
+    .galeria-btn-ver-mas {
+        padding: 0.4rem 1.2rem;           /* Padding más reducido */
+        font-size: 0.8rem;                /* Fuente más pequeña */
+    }
+    
+    .galeria-overlay {
+        padding: 1rem 0.8rem 0.8rem;      /* Padding muy reducido */
+    }
+    
+    .galeria-cards-container {
+        padding: 2rem 1rem;                /* Padding reducido en móvil */
+        margin-top: 1.5rem;               /* Menos margen superior */
+    }
+}
+
+@media (max-width: 576px) {
+    .galeria-imagen-nueva {
+        height: 220px;                    /* Altura muy reducida en móviles pequeños */
+    }
+    
+    .galeria-titulo-nuevo {
+        font-size: 0.9rem;                /* Título muy pequeño */
+    }
+    
+    .galeria-precio-nuevo {
+        font-size: 1.1rem;                /* Precio muy pequeño */
+        margin-bottom: 0.6rem;            /* Margen mínimo */
+    }
+    
+    .galeria-btn-ver-mas {
+        padding: 0.3rem 1rem;             /* Padding muy reducido */
+        font-size: 0.7rem;                /* Fuente muy pequeña */
+    }
+    
+    .galeria-overlay {
+        padding: 0.8rem 0.5rem 0.5rem;    /* Padding mínimo */
+    }
+    
+    .galeria-main {
+        padding-top: 90px;                /* Menos espacio superior en móvil */
+        padding-left: 0.5rem;             /* Padding lateral reducido */
+        padding-right: 0.5rem;            /* Padding lateral reducido */
+    }
+    
+    .galeria-cards-container {
+        padding: 1.5rem 0.5rem;           /* Padding mínimo en móviles pequeños */
+        border-radius: 15px;              /* Bordes menos redondeados */
+    }
 }
 
 /* ====== ESTADO DE CARGA ====== */
@@ -189,7 +239,7 @@
     margin-bottom: 1rem;                  /* Margen inferior */
 }
 
-/* ====== RESPONSIVIDAD ====== */
+/* ====== RESPONSIVIDAD PARA TÍTULOS ====== */
 @media (max-width: 768px) {
     .galeria-title {
         font-size: 2rem;                  /* Título más pequeño en móvil */
@@ -197,31 +247,5 @@
     
     .galeria-subtitle {
         font-size: 1rem;                  /* Subtítulo más pequeño */
-    }
-    
-    .galeria-main {
-        padding-top: 100px;               /* Menos espacio superior en móvil */
-    }
-    
-    .galeria-imagen-container {
-        height: 180px;                    /* Imagen más pequeña en móvil */
-    }
-    
-    .galeria-botones .btn {
-        min-width: 100px;                 /* Ancho mínimo reducido en móvil */
-        padding: 0.35rem 1rem;            /* Padding reducido para móvil */
-    }
-}
-
-@media (max-width: 576px) {
-    .galeria-main {
-        padding-top: 90px;                /* Aún menos espacio en pantallas muy pequeñas */
-        padding-left: 0.5rem;             /* Padding lateral reducido */
-        padding-right: 0.5rem;            /* Padding lateral reducido */
-    }
-    
-    .precio-valor {
-        font-size: 1rem;                  /* Precio más pequeño */
-        padding: 0.4rem 0.8rem;           /* Menos padding */
     }
 }
