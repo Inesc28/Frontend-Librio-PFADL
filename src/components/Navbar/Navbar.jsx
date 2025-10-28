@@ -68,6 +68,9 @@ const CustomNavbar = () => {
             {/* ====== OPCIONES PARA USUARIOS AUTENTICADOS ====== */}
             {isAuthenticated && (
               <>
+                <Nav.Link as={Link} to="/galeria" className="custom-nav-link">
+                  Galería
+                </Nav.Link>
                 <Nav.Link href="#carrito" className="custom-nav-link">
                   Carrito
                 </Nav.Link>

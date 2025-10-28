@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Home, IniciarSesion, RegistroUsuario, MiPerfil, Publicar } from './assets/views'
+import { Home, IniciarSesion, RegistroUsuario, MiPerfil, Publicar, Galeria } from './assets/views'
 import './App.css'
 
 function App() {
@@ -17,6 +17,8 @@ function App() {
         <Route path="/perfil" element={<MiPerfil />} />
         <Route path="/publicar" element={<Publicar />} />
         <Route path="/vender" element={<Publicar />} />
+        <Route path="/galeria" element={<Galeria />} />
+        <Route path="/libros" element={<Galeria />} />
         
       </Routes>
     </Router>
