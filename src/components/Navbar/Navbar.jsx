@@ -71,7 +71,7 @@ const CustomNavbar = () => {
                                 <Nav.Link href="#carrito" className="custom-nav-link">
                                     Carrito
                                 </Nav.Link>
-                                <Nav.Link href="#vender" className="custom-nav-link">
+                                <Nav.Link as={Link} to="/publicar" className="custom-nav-link">
                                     Vender
                                 </Nav.Link>
                                 <Nav.Link 
