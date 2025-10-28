@@ -5,6 +5,7 @@
  * libros para vender en la plataforma Librio.
  * Incluye formulario completo con todos los campos necesarios.
  * Utiliza componentes modulares (Navbar y Footer) y React Bootstrap.
+ * Integrado con React Context para gestión global del estado y simulación de API.
  */
 
 import React, { useState } from 'react';
@@ -14,9 +15,12 @@ import {
   Col,         // Columna del grid system
   Form,        // Formulario de Bootstrap
   Button,      // Botón estilizado
-  Card         // Tarjeta contenedora
+  Card,        // Tarjeta contenedora
+  Alert,       // Alertas de Bootstrap
+  Spinner      // Spinner de carga
 } from 'react-bootstrap';
 import { Navbar, Footer } from '../../../components';  // Componentes modulares
+import { useLibros } from '../../../context/LibrosContext';  // Hook del contexto
 import './Publicar.css';
 
 /**
@@ -24,6 +28,9 @@ import './Publicar.css';
  * @returns {JSX.Element} Página para publicar libros en Librio
  */
 const Publicar = () => {
+
+  // ====== CONTEXTO DE LIBROS ======
+  const { agregarLibro, isLoading, error, limpiarError } = useLibros();
 
   // ====== ESTADO DEL FORMULARIO ======
   // Estados para manejar los valores de todos los campos
@@ -37,6 +44,10 @@ const Publicar = () => {
     precio: '',          // Precio de venta
     urlImagen: ''        // URL de la imagen del libro
   });
+
+  // ====== ESTADO DE MENSAJES ======
+  const [mensaje, setMensaje] = useState(null);
+  const [tipoMensaje, setTipoMensaje] = useState('success'); // success, warning, danger
 
   /**
    * Maneja los cambios en los campos del formulario
@@ -54,15 +65,75 @@ const Publicar = () => {
    * Maneja el envío del formulario para publicar el libro
    * @param {Event} e - Evento del formulario
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();  // Prevenir comportamiento por defecto
 
-    // TODO: Validar todos los campos
-    console.log('Datos del libro a publicar:', libroData);
+    // Limpiar mensajes y errores anteriores
+    setMensaje(null);
+    limpiarError();
 
-    // TODO: Enviar datos al servidor
-    // TODO: Mostrar mensaje de confirmación
-    // TODO: Limpiar formulario o redirigir
+    // ====== VALIDACIÓN COMPLETA ======
+    const errores = [];
+
+    if (!libroData.titulo.trim()) errores.push('El título es obligatorio');
+    if (!libroData.autor.trim()) errores.push('El autor es obligatorio');
+    if (!libroData.precio || parseFloat(libroData.precio) <= 0) {
+      errores.push('El precio debe ser mayor a 0');
+    }
+
+    if (errores.length > 0) {
+      setMensaje(`Errores de validación: ${errores.join(', ')}`);
+      setTipoMensaje('danger');
+      return;
+    }
+
+    try {
+      // ====== PREPARAR DATOS PARA LA API ======
+      const datosLibro = {
+        titulo: libroData.titulo.trim(),
+        autor: libroData.autor.trim(),
+        editorial: libroData.editorial.trim() || 'Editorial no especificada',
+        año: parseInt(libroData.año) || new Date().getFullYear(),
+        genero: libroData.genero.trim() || 'Sin género',
+        precio: parseFloat(libroData.precio),
+        descripcion: libroData.descripcion.trim() || 'Sin descripción disponible',
+        urlImagen: libroData.urlImagen.trim() || 'https://via.placeholder.com/300x400/8b5a8c/ffffff?text=Sin+Imagen'
+      };
+
+      // ====== LLAMADA AL CONTEXT ======
+      const resultado = await agregarLibro(datosLibro);
+
+      if (resultado.success) {
+        // ====== ÉXITO - MOSTRAR MENSAJE Y LIMPIAR FORMULARIO ======
+        setMensaje(`¡Libro publicado exitosamente! Ya está disponible en la galería.`);
+        setTipoMensaje('success');
+
+        // Limpiar formulario
+        setLibroData({
+          titulo: '',
+          autor: '',
+          editorial: '',
+          año: '',
+          genero: '',
+          descripcion: '',
+          precio: '',
+          urlImagen: ''
+        });
+
+        // Auto-ocultar el mensaje después de 5 segundos
+        setTimeout(() => setMensaje(null), 5000);
+
+      } else {
+        // ====== ERROR ======
+        setMensaje(`Error: ${resultado.error}`);
+        setTipoMensaje('danger');
+      }
+
+    } catch (error) {
+      // ====== ERROR INESPERADO ======
+      setMensaje('Error al publicar el libro. Inténtalo nuevamente.');
+      setTipoMensaje('danger');
+    }
   };
 
   return (
@@ -87,6 +158,19 @@ const Publicar = () => {
                     <h2 className="publicar-title text-center mb-5">
                       Publicar un Libro
                     </h2>
+
+                    {/* ====== ALERTAS Y MENSAJES DE ESTADO ====== */}
+                    {mensaje && (
+                      <Alert variant={tipoMensaje} className="mb-4" dismissible onClose={() => setMensaje(null)}>
+                        {mensaje}
+                      </Alert>
+                    )}
+
+                    {error && (
+                      <Alert variant="danger" className="mb-4" dismissible onClose={limpiarError}>
+                        <strong>Error de conexión:</strong> {error}
+                      </Alert>
+                    )}
 
                     {/* ====== FORMULARIO DE PUBLICACIÓN ====== */}
                     <Form onSubmit={handleSubmit}>
@@ -245,14 +329,29 @@ const Publicar = () => {
                         </Col>
                       </Row>
 
-                      {/* ====== BOTÓN DE PUBLICAR ====== */}
+                      {/* ====== BOTÓN DE PUBLICAR CON ESTADOS ====== */}
                       <div className="text-center">
                         <Button
                           type="submit"
                           className="publicar-button"
                           size="lg"
+                          disabled={isLoading}
                         >
-                          Publicar
+                          {isLoading ? (
+                            <>
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                className="me-2"
+                              />
+                              Publicando...
+                            </>
+                          ) : (
+                            'Publicar'
+                          )}
                         </Button>
                       </div>
 

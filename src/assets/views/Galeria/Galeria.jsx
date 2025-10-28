@@ -5,18 +5,21 @@
  * en la plataforma Librio. Solo accesible para usuarios autenticados.
  * Muestra los productos en formato de grid responsivo con información básica.
  * Utiliza componentes modulares (Navbar y Footer) y React Bootstrap.
+ * Integrado con React Context para recibir datos dinámicos desde la API.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Container,    // Contenedor responsivo de Bootstrap
   Row,         // Fila del grid system
   Col,         // Columna del grid system
   Card,        // Tarjeta contenedora
   Button,      // Botón estilizado
-  Badge        // Etiqueta para precio
+  Badge,       // Etiqueta para precio
+  Spinner      // Spinner de carga
 } from 'react-bootstrap';
 import { Navbar, Footer } from '../../../components';  // Componentes modulares
+import { useLibros } from '../../../context/LibrosContext';  // Hook del contexto
 import './Galeria.css';
 
 /**
@@ -25,121 +28,21 @@ import './Galeria.css';
  */
 const Galeria = () => {
 
-  // ====== ESTADO PARA LIBROS ======
-  // Este estado almacenará los libros obtenidos de la base de datos
-  const [libros, setLibros] = useState([
-    // ====== EJEMPLOS DE ESTRUCTURA DE DATOS ======
-    // Estas dos cards sirven como ejemplo del diseño y estructura esperada
-    {
-      id: 1,
-      titulo: "Rosas Rojas",
-      autor: "Autor Ejemplo 1",
-      editorial: "Editorial Romance",
-      año: 2023,
-      genero: "Romance",
-      precio: 200,
-      descripcion: "Una hermosa historia de amor que cautiva desde la primera página.",
-      urlImagen: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 2,
-      titulo: "Rosas Rojas",
-      autor: "Autor Ejemplo 2", 
-      editorial: "Editorial Clásicos",
-      año: 2022,
-      genero: "Romance",
-      precio: 200,
-      descripcion: "Continuación de la saga que enamoró a millones de lectores.",
-      urlImagen: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 3,
-      titulo: "Rosas Rojas",
-      autor: "Autor Ejemplo 3",
-      editorial: "Editorial Moderna",
-      año: 2024,
-      genero: "Romance",
-      precio: 200,
-      descripcion: "Nueva entrega de la serie más esperada del año.",
-      urlImagen: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 4,
-      titulo: "Rosas Rojas",
-      autor: "Autor Ejemplo 4",
-      editorial: "Editorial Premium",
-      año: 2021,
-      genero: "Romance",
-      precio: 200,
-      descripcion: "Edición especial con contenido exclusivo.",
-      urlImagen: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 5,
-      titulo: "Rosas Rojas",
-      autor: "Autor Ejemplo 5",
-      editorial: "Editorial Digital",
-      año: 2023,
-      genero: "Romance",
-      precio: 200,
-      descripcion: "Versión actualizada con nuevo prólogo del autor.",
-      urlImagen: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 6,
-      titulo: "Rosas Rojas",
-      autor: "Autor Ejemplo 6",
-      editorial: "Editorial Vintage",
-      año: 2020,
-      genero: "Romance",
-      precio: 200,
-      descripcion: "Colección completa en una sola edición de lujo.",
-      urlImagen: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    }
-    // ====== AQUÍ SE CARGARÁN LOS DATOS DE LA BASE DE DATOS ======
-    // Los demás libros vendrán de la API/base de datos cuando se conecte el backend
-    // Estructura esperada: { id, titulo, autor, editorial, año, genero, precio, descripcion, urlImagen }
-  ]);
+  // ====== CONTEXTO DE LIBROS ======
+  const { 
+    libros, 
+    isLoading, 
+    error, 
+    obtenerLibros
+  } = useLibros();
 
-  // ====== ESTADO DE CARGA ======
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // ====== FUNCIÓN PARA CARGAR LIBROS DESDE LA BASE DE DATOS ======
+  // ====== CARGAR DATOS AL MONTAR EL COMPONENTE ======
   /**
-   * Carga los libros desde la API/base de datos
-   * TODO: Implementar llamada real a la API
+   * Efecto para obtener los libros al cargar la galería
    */
-  const cargarLibros = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      // TODO: Reemplazar con la llamada real a tu API
-      // const response = await fetch('/api/libros');
-      // const librosFromDB = await response.json();
-
-      // TODO: Actualizar el estado con los datos de la base de datos
-      // setLibros([
-      //     // Mantener el libro de ejemplo
-      //     libros[0],
-      //     // Agregar los libros de la base de datos
-      //     ...librosFromDB
-      // ]);
-
-    } catch (err) {
-      setError('Error al cargar los libros');
-      console.error('Error:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // ====== EFECTO PARA CARGAR DATOS AL MONTAR EL COMPONENTE ======
-  // TODO: Descomentar cuando tengas la API lista
-  // useEffect(() => {
-  //     cargarLibros();
-  // }, []);
+  useEffect(() => {
+    obtenerLibros();
+  }, [obtenerLibros]);
 
   /**
    * Formatea el precio en formato de moneda colombiana
@@ -156,7 +59,7 @@ const Galeria = () => {
 
   /**
    * Maneja el clic en el botón "Ver Detalles"
-   * @param {number} libroId - ID del libro seleccionado
+   * @param {string} libroId - ID del libro seleccionado
    */
   const handleVerDetalles = (libroId) => {
     // TODO: Implementar navegación a página de detalles del libro
@@ -190,9 +93,7 @@ const Galeria = () => {
               <Row className="mt-5">
                 <Col>
                   <div className="galeria-loading text-center">
-                    <div className="spinner-border text-light" role="status">
-                      <span className="visually-hidden">Cargando...</span>
-                    </div>
+                    <Spinner animation="border" variant="light" />
                     <p className="mt-3">Cargando libros...</p>
                   </div>
                 </Col>
@@ -208,7 +109,7 @@ const Galeria = () => {
                     <p className="text-light">{error}</p>
                     <Button
                       variant="outline-light"
-                      onClick={cargarLibros}
+                      onClick={obtenerLibros}
                     >
                       Reintentar
                     </Button>
@@ -266,16 +167,6 @@ const Galeria = () => {
                     </Card>
                   </Col>
                 ))}
-
-                {/* ====== MENSAJE SI NO HAY LIBROS ====== */}
-                {libros.length === 0 && (
-                  <Col xs={12}>
-                    <div className="galeria-vacio text-center">
-                      <h3>No hay libros disponibles</h3>
-                      <p>¡Sé el primero en publicar un libro en la galería!</p>
-                    </div>
-                  </Col>
-                )}
               </Row>
               </div>
             )}

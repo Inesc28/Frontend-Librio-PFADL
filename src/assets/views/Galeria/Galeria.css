@@ -64,21 +64,35 @@
 .galeria-imagen-nueva {
     position: relative;                   /* Posición relativa para overlay */
     height: 280px;                        /* Altura reducida para 3 columnas */
+    width: 100%;                          /* Ancho completo del contenedor */
     border-radius: 15px;                  
-    overflow: hidden;                     
+    overflow: hidden;                     /* Corta cualquier desbordamiento de imagen */
     background: linear-gradient(135deg, #2d1b3d, #4a1942); 
+    display: flex;                        /* Flexbox para mejor control de la imagen */
+    align-items: center;                  /* Centra verticalmente */
+    justify-content: center;              /* Centra horizontalmente */
 }
 
 .galeria-img {
     width: 100%;
     height: 100%;                         
-    object-fit: cover;                    
-    border-radius: 20px;                  
+    object-fit: contain;                    /* Mantiene proporción y llena el contenedor */
+    object-position: center;              /* Centra la imagen dentro del contenedor */
+    border-radius: 15px;                  /* Ajustado para coincidir con el contenedor */
     transition: transform 0.3s ease;      /* Transición para zoom */
+    display: block;                       /* Elimina espacios en blanco debajo de la imagen */
 }
 
 .galeria-card-nueva:hover .galeria-img {
     transform: scale(1.05);               /* Zoom sutil al hover */
+}
+
+/* ====== AJUSTES ADICIONALES PARA IMÁGENES ====== */
+.galeria-img {
+    max-width: 100%;                      /* Nunca exceder el ancho del contenedor */
+    max-height: 100%;                     /* Nunca exceder la altura del contenedor */
+    min-width: 100%;                      /* Mínimo ancho para llenar el contenedor */
+    min-height: 100%;                     /* Mínimo altura para llenar el contenedor */
 }
 
 /* ====== OVERLAY CON INFORMACIÓN ====== */
@@ -141,6 +155,7 @@
 @media (max-width: 768px) {
     .galeria-imagen-nueva {
         height: 250px;                    /* Altura aún más reducida en tablet */
+        width: 100%;                      /* Asegurar ancho completo */
     }
     
     .galeria-titulo-nuevo {
@@ -170,6 +185,7 @@
 @media (max-width: 576px) {
     .galeria-imagen-nueva {
         height: 220px;                    /* Altura muy reducida en móviles pequeños */
+        width: 100%;                      /* Asegurar ancho completo */
     }
     
     .galeria-titulo-nuevo {
