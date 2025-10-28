@@ -15,8 +15,8 @@ import {
     Image        // Componente de imagen responsiva
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';  // Para navegación
-import { Navbar, Footer } from '../../components';  // Componentes modulares
-import './home.css';
+import { Navbar, Footer } from '../../../components';  // Componentes modulares
+import './Home.css';
 
 /**
  * Componente funcional Home
@@ -81,7 +81,7 @@ const Home = () => {
 
                         {/* ===== SEGUNDA FILA - TRES IMÁGENES ===== */}
                         {/* Pila de libros izquierda */}
-                        <Col lg={4} md={4} xs={12}> /* */
+                        <Col lg={4} md={4} xs={12}> 
                             <Image
                                 src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                                 alt="Pila de libros"

@@ -122,23 +122,23 @@
 
 /* ====== TEXTO DE REGISTRO ====== */
 .register-text {
-  color: rgba(255, 255, 255, 0.8);     /* Blanco semi-transparente */
-  margin: 0;                           /* Sin margen */
-  font-size: 0.95rem;                  /* Fuente ligeramente menor */
+  color: rgba(255, 255, 255, 0.8);     
+  margin: 0;                          
+  font-size: 0.95rem;               
 }
 
 /* Link de registro */
 .register-link {
-  color: #d4a5d4;                      /* Color morado claro */
-  text-decoration: none;               /* Sin subrayado */
-  font-weight: 500;                    /* Peso medio */
-  transition: color 0.3s ease;        /* Transición suave */
+  color: #d4a5d4;                      
+  text-decoration: none;              
+  font-weight: 500;                   
+  transition: color 0.3s ease;      
 }
 
 /* Estado hover del link */
 .register-link:hover {
-  color: #e6c7e6;                      /* Color más claro al hover */
-  text-decoration: underline;          /* Subrayado al hover */
+  color: #e6c7e6;                   
+  text-decoration: underline;         
 }
 
 /* ====== DISEÑO RESPONSIVO ====== */

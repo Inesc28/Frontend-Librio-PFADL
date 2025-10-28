@@ -16,8 +16,8 @@ import {
     Card         // Tarjeta contenedora
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';  // Para navegación
-import { Navbar, Footer } from '../../components';  // Componentes modulares
-import './iniciarSesion.css';
+import { Navbar, Footer } from '../../../components';  // Componentes modulares
+import './IniciarSesion.css';
 
 /**
  * Componente funcional IniciarSesion
