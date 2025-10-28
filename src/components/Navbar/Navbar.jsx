@@ -34,7 +34,7 @@ const CustomNavbar = () => {
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav>
                         <Nav.Link as={Link} to="/" className="custom-nav-link">Inicio</Nav.Link>
-                        <Nav.Link href="#registro" className="custom-nav-link">Registrate</Nav.Link>
+                        <Nav.Link as={Link} to="/registro" className="custom-nav-link">Registrate</Nav.Link>
                         <Nav.Link as={Link} to="/iniciar-sesion" className="custom-nav-link">Iniciar Sesión</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

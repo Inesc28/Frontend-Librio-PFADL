@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './assets/views/home'
-import IniciarSesion from './assets/views/iniciarSesion'
+import { Home, IniciarSesion, RegistroUsuario } from './assets/views'
 import './App.css'
 
 function App() {
@@ -16,6 +15,12 @@ function App() {
         
         {/* Ruta para iniciar sesión (español) */}
         <Route path="/iniciar-sesion" element={<IniciarSesion />} />
+        
+        {/* Ruta para registro de usuario */}
+        <Route path="/registro" element={<RegistroUsuario />} />
+        
+        {/* Ruta para registro de usuario (alternativa) */}
+        <Route path="/registrarse" element={<RegistroUsuario />} />
       </Routes>
     </Router>
   )
