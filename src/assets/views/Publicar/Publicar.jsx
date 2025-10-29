@@ -33,6 +33,37 @@ const Publicar = () => {
   const { agregarLibro, isLoading, error, limpiarError } = useLibros();
 
   // ====== ESTADO DEL FORMULARIO ======
+  // 🚀 MEJORA DISPONIBLE: Usar custom hook useForm
+  // 💡 EJEMPLO DE IMPLEMENTACIÓN:
+  /*
+  import { useForm } from '../../../hooks';
+  
+  const validationRules = {
+    titulo: { required: 'El título es obligatorio' },
+    autor: { required: 'El autor es obligatorio' },
+    precio: { 
+      required: 'El precio es obligatorio', 
+      positive: true, 
+      positiveMessage: 'El precio debe ser mayor a 0' 
+    }
+  };
+
+  const {
+    values: libroData,
+    errors,
+    handleChange: handleInputChange,
+    handleSubmit,
+    isSubmitting,
+    resetForm
+  } = useForm({
+    titulo: '', autor: '', editorial: '', año: '', 
+    genero: '', descripcion: '', precio: '', urlImagen: ''
+  }, validationRules, async (values) => {
+    await agregarLibro(values);
+    // Lógica de éxito
+  });
+  */
+  
   // Estados para manejar los valores de todos los campos
   const [libroData, setLibroData] = useState({
     titulo: '',          // Título del libro

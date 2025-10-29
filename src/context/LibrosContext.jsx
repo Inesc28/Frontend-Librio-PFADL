@@ -7,6 +7,7 @@
  */
 
 import React, { createContext, useContext, useState, useCallback } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 /**
  * Contexto de libros
@@ -37,8 +38,22 @@ export const LibrosProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  // ====== ESTADO DEL CARRITO ======
-  const [carrito, setCarrito] = useState([]);
+  // ====== 🚀 CARRITO CON PERSISTENCIA EN LOCALSTORAGE ======
+  // 📍 UBICACIÓN: LibrosContext - Carrito persistente
+  // 💡 BENEFICIO: El carrito se mantiene entre sesiones del navegador
+  // 🎯 USO: Los usuarios no pierden sus items al cerrar el navegador
+  const [carrito, setCarrito, limpiarCarritoStorage] = useLocalStorage('librio-carrito', []);
+  
+  // ====== 🚀 PREFERENCIAS DE USUARIO CON PERSISTENCIA ======
+  // 📍 UBICACIÓN: LibrosContext - Preferencias persistentes
+  // 💡 BENEFICIO: Recordar configuraciones del usuario
+  const [preferenciasUsuario, setPreferenciasUsuario] = useLocalStorage('librio-preferencias', {
+    tema: 'oscuro',
+    moneda: 'COP',
+    idioma: 'es',
+    notificaciones: true,
+    ordenGaleria: 'recientes' // recientes, precio-asc, precio-desc, alfabetico
+  });
 
   /**
    * Simula una llamada a la API para agregar un nuevo libro
@@ -297,32 +312,77 @@ export const LibrosProvider = ({ children }) => {
    */
   const limpiarCarrito = useCallback(() => {
     setCarrito([]);
-  }, []);
+  }, [setCarrito]);
+
+  // ====== 🚀 FUNCIONES DE PREFERENCIAS DE USUARIO ======
+  // 📍 UBICACIÓN: LibrosContext - Gestión de preferencias persistentes
+  // 💡 BENEFICIO: Recordar configuraciones entre sesiones
+
+  /**
+   * Actualizar una preferencia específica del usuario
+   * @param {string} clave - Clave de la preferencia (tema, moneda, etc.)
+   * @param {*} valor - Nuevo valor para la preferencia
+   */
+  const actualizarPreferencia = useCallback((clave, valor) => {
+    setPreferenciasUsuario(prevPreferencias => ({
+      ...prevPreferencias,
+      [clave]: valor
+    }));
+  }, [setPreferenciasUsuario]);
+
+  /**
+   * Resetear preferencias a valores por defecto
+   */
+  const resetearPreferencias = useCallback(() => {
+    setPreferenciasUsuario({
+      tema: 'oscuro',
+      moneda: 'COP',
+      idioma: 'es',
+      notificaciones: true,
+      ordenGaleria: 'recientes'
+    });
+  }, [setPreferenciasUsuario]);
+
+  /**
+   * 🚀 FUNCIÓN MEJORADA: Limpiar todo el almacenamiento local
+   * 📝 COMENTARIO: Para logout completo o reset de la aplicación
+   */
+  const limpiarTodoElAlmacenamiento = useCallback(() => {
+    limpiarCarritoStorage();
+    resetearPreferencias();
+    // También podrías limpiar otros datos como historial de búsqueda, etc.
+  }, [limpiarCarritoStorage, resetearPreferencias]);
 
   // Valor del contexto con todos los datos y funciones
   const contextValue = {
-    // Estado
+    // ====== ESTADO ======
     libros,
     isLoading,
     error,
-    carrito,
+    carrito, // 🚀 Ahora persistente con localStorage
+    preferenciasUsuario, // 🚀 NUEVO: Preferencias persistentes
     
-    // Funciones CRUD de libros
+    // ====== FUNCIONES CRUD DE LIBROS ======
     agregarLibro,
     obtenerLibros,
     actualizarLibro,
     eliminarLibro,
     obtenerLibroPorId,
     
-    // Funciones del carrito
+    // ====== FUNCIONES DEL CARRITO PERSISTENTE ======
     agregarAlCarrito,
     eliminarDelCarrito,
     actualizarCantidadCarrito,
     obtenerTotalCarrito,
     obtenerCantidadTotalCarrito,
-    limpiarCarrito,
+    limpiarCarrito, // 🚀 Ahora también limpia localStorage
     
-    // Utilidades
+    // ====== 🚀 NUEVAS FUNCIONES DE PREFERENCIAS ======
+    actualizarPreferencia,
+    resetearPreferencias,
+    limpiarTodoElAlmacenamiento,
+    
+    // ====== UTILIDADES ======
     limpiarError
   };
 

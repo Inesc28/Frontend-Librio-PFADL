@@ -8,7 +8,7 @@
  * Integrado con React Context para recibir datos dinámicos desde la API.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,    // Contenedor responsivo de Bootstrap
@@ -46,18 +46,79 @@ const Galeria = () => {
     obtenerLibros();
   }, [obtenerLibros]);
 
-  /**
-   * Formatea el precio en formato de moneda colombiana
-   * @param {number} precio - El precio numérico
-   * @returns {string} El precio formateado
-   */
-  const formatearPrecio = (precio) => {
+  // ====== 🚀 OPTIMIZACIÓN CON useMemo ======
+  // 📍 UBICACIÓN: Galería - Formateo de precios optimizado
+  // 💡 BENEFICIO: Evita recrear el formateador en cada render
+  const formatearPrecio = useMemo(() => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
       currency: 'COP',
       minimumFractionDigits: 0
-    }).format(precio);
-  };
+    });
+  }, []);
+
+  // ====== 🚀 OPTIMIZACIÓN CON useMemo ======
+  // 📍 UBICACIÓN: Galería - Estadísticas de libros
+  // 💡 BENEFICIO: Solo recalcula cuando cambia la lista de libros
+  // 🎯 USO: Evita cálculos costosos en cada render
+  const estadisticasLibros = useMemo(() => {
+    if (!libros || libros.length === 0) {
+      return {
+        total: 0,
+        precioPromedio: 0,
+        generoMasPopular: 'N/A',
+        libroMasCaro: null,
+        libroMasBarato: null
+      };
+    }
+
+    const total = libros.length;
+    const precioPromedio = libros.reduce((sum, libro) => sum + (libro.precio || 0), 0) / total;
+    
+    // Calcular género más popular
+    const generos = libros.reduce((acc, libro) => {
+      const genero = libro.genero || 'Sin género';
+      acc[genero] = (acc[genero] || 0) + 1;
+      return acc;
+    }, {});
+    
+    const generoMasPopular = Object.entries(generos)
+      .sort(([,a], [,b]) => b - a)[0]?.[0] || 'N/A';
+
+    const libroMasCaro = libros.reduce((max, libro) => 
+      (libro.precio || 0) > (max?.precio || 0) ? libro : max, null);
+    
+    const libroMasBarato = libros.reduce((min, libro) => 
+      (libro.precio || Infinity) < (min?.precio || Infinity) ? libro : min, null);
+
+    return {
+      total,
+      precioPromedio: Math.round(precioPromedio),
+      generoMasPopular,
+      libroMasCaro,
+      libroMasBarato
+    };
+  }, [libros]);
+
+  // ====== 🚀 OPTIMIZACIÓN CON useMemo ======
+  // 📍 UBICACIÓN: Galería - Libros procesados con datos adicionales
+  // 💡 BENEFICIO: Solo reprocesa cuando cambian los libros
+  // 🎯 USO: Agrega información calculada a cada libro sin afectar performance
+  const librosConDatosAdicionales = useMemo(() => {
+    return libros.map(libro => ({
+      ...libro,
+      // Información adicional calculada
+      precioFormateado: formatearPrecio.format(libro.precio || 0),
+      esNuevo: (() => {
+        const fechaPublicacion = new Date(libro.fechaPublicacion);
+        const ahora = new Date();
+        const diferenciaDias = (ahora - fechaPublicacion) / (1000 * 60 * 60 * 24);
+        return diferenciaDias <= 7; // Nuevo si fue publicado en los últimos 7 días
+      })(),
+      esCaro: (libro.precio || 0) > estadisticasLibros.precioPromedio,
+      slugTitulo: libro.titulo?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || 'libro'
+    }));
+  }, [libros, formatearPrecio, estadisticasLibros.precioPromedio]);
 
   /**
    * Maneja el clic en el botón "Ver Detalles"
@@ -120,11 +181,27 @@ const Galeria = () => {
               </Row>
             )}
 
+            {/* ====== 📊 ESTADÍSTICAS OPTIMIZADAS ====== */}
+            {!isLoading && !error && librosConDatosAdicionales.length > 0 && (
+              <Row className="mb-4">
+                <Col>
+                  <div className="galeria-stats text-center text-light">
+                    <p>
+                      📚 <strong>{estadisticasLibros.total}</strong> libros disponibles | 
+                      💰 Precio promedio: <strong>${estadisticasLibros.precioPromedio.toLocaleString()}</strong> | 
+                      🏆 Género popular: <strong>{estadisticasLibros.generoMasPopular}</strong>
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+            )}
+
             {/* ====== CONTENEDOR CON FONDO PARA LAS CARDS ====== */}
             {!isLoading && !error && (
               <div className="galeria-cards-container">
                 <Row className="justify-content-center g-3">
-                  {libros.map((libro) => (
+                  {/* 🚀 USANDO DATOS OPTIMIZADOS CON useMemo */}
+                  {librosConDatosAdicionales.map((libro) => (
                     <Col key={libro.id} xs={12} sm={6} md={4} lg={4}>
 
                     {/* ====== TARJETA DE LIBRO ESTILO NUEVO ====== */}
@@ -150,9 +227,12 @@ const Galeria = () => {
                             {libro.titulo}
                           </h3>
                           
-                          {/* Precio destacado */}
+                          {/* 🚀 PRECIO OPTIMIZADO - Ya formateado con useMemo */}
                           <div className="galeria-precio-nuevo">
-                            ${libro.precio}
+                            {libro.precioFormateado}
+                            {/* 🎯 BADGE: Mostrar si es caro o nuevo */}
+                            {libro.esNuevo && <span className="badge bg-success ms-2">¡Nuevo!</span>}
+                            {libro.esCaro && <span className="badge bg-warning ms-2">Premium</span>}
                           </div>
                           
                           {/* Botón Ver más */}
