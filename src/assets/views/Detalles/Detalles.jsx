@@ -28,7 +28,7 @@ import './Detalles.css';
 const Detalles = () => {
 
   // ====== CONTEXTO Y NAVEGACIÓN ======
-  const { obtenerLibroPorId } = useLibros();
+  const { obtenerLibroPorId, agregarAlCarrito } = useLibros();
   const { id } = useParams(); // Obtener ID del libro desde la URL
   const navigate = useNavigate();
 
@@ -65,8 +65,13 @@ const Detalles = () => {
    * Maneja el clic en agregar al carrito
    */
   const handleAgregarAlCarrito = () => {
-    // TODO: Implementar funcionalidad de carrito
-    alert('Funcionalidad de carrito próximamente disponible');
+    if (libro) {
+      // Agregar el libro al carrito
+      agregarAlCarrito(libro, 1);
+      
+      // Redirigir a la vista del carrito
+      navigate('/carrito');
+    }
   };
 
   /**

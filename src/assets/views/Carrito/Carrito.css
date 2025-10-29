@@ -1,0 +1,334 @@
+/**
+ * Estilos para el componente Carrito
+ * 
+ * Implementa el diseño del carrito de compras basado en la imagen de referencia
+ * con colores consistentes (#4a1942) y diseño responsivo
+ */
+
+/* ====== CONTENEDOR PRINCIPAL ====== */
+.carrito-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4a1942 0%, #8b5a8c 100%);
+  padding: 2rem 0;
+}
+
+.carrito-main {
+  padding: 2rem 0;
+}
+
+/* ====== TÍTULO ====== */
+.carrito-titulo {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== LISTA DE ITEMS DEL CARRITO ====== */
+.carrito-lista {
+  margin-bottom: 2rem;
+}
+
+.carrito-item .card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carrito-item .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ====== IMAGEN DEL LIBRO ====== */
+.carrito-imagen-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carrito-imagen {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== INFORMACIÓN DEL LIBRO ====== */
+.carrito-libro-titulo {
+  color: #4a1942;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.carrito-libro-autor {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* ====== PRECIO ====== */
+.carrito-precio {
+  font-weight: bold;
+  color: #4a1942;
+  font-size: 1.1rem;
+}
+
+/* ====== CONTROLES DE CANTIDAD ====== */
+.carrito-cantidad-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carrito-cantidad-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 25px;
+  padding: 0.3rem 0.5rem;
+}
+
+.carrito-btn-cantidad {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #4a1942;
+  color: #4a1942;
+  background-color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.carrito-btn-cantidad:hover:not(:disabled) {
+  background-color: #4a1942;
+  color: white;
+}
+
+.carrito-btn-cantidad:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.carrito-cantidad-valor {
+  font-weight: bold;
+  color: #4a1942;
+  min-width: 25px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* ====== BOTÓN ELIMINAR ====== */
+.carrito-btn-eliminar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #dc3545;
+  color: #dc3545;
+  background-color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.carrito-btn-eliminar:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* ====== RESUMEN DEL PEDIDO ====== */
+.carrito-resumen {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.carrito-resumen .card-body {
+  padding: 1.5rem;
+}
+
+.carrito-resumen h5 {
+  color: #4a1942;
+  font-weight: bold;
+}
+
+.carrito-total {
+  color: #4a1942;
+  font-size: 1.3rem;
+}
+
+/* ====== BOTONES ====== */
+.carrito-btn-volver {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  background-color: transparent;
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.carrito-btn-volver:hover {
+  background-color: #ffffff;
+  color: #4a1942;
+  transform: translateY(-2px);
+}
+
+.carrito-btn-checkout {
+  background: linear-gradient(135deg, #4a1942 0%, #8b5a8c 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.carrito-btn-checkout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(74, 25, 66, 0.4);
+}
+
+.carrito-btn-galeria {
+  background: linear-gradient(135deg, #4a1942 0%, #8b5a8c 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.carrito-btn-galeria:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(74, 25, 66, 0.4);
+}
+
+/* ====== CARRITO VACÍO ====== */
+.carrito-vacio .card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.carrito-vacio h3 {
+  color: #ffffff;
+}
+
+.carrito-vacio .text-muted {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ====== RESPONSIVE DESIGN ====== */
+@media (max-width: 768px) {
+  .carrito-titulo {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .carrito-container {
+    padding: 1rem 0;
+  }
+  
+  .carrito-main {
+    padding: 1rem 0;
+  }
+  
+  .carrito-imagen {
+    width: 60px;
+    height: 90px;
+  }
+  
+  .carrito-libro-titulo {
+    font-size: 1rem;
+  }
+  
+  .carrito-libro-autor {
+    font-size: 0.8rem;
+  }
+  
+  .carrito-precio {
+    font-size: 1rem;
+  }
+  
+  .carrito-btn-cantidad {
+    width: 25px;
+    height: 25px;
+    font-size: 0.9rem;
+  }
+  
+  .carrito-cantidad-valor {
+    font-size: 1rem;
+    min-width: 20px;
+  }
+  
+  .carrito-btn-eliminar {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+  
+  /* Stack layout en móvil */
+  .carrito-item .row > div:not(:first-child) {
+    padding-top: 0.5rem;
+  }
+  
+  /* Centrar elementos en móvil */
+  .carrito-item .row > div {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .carrito-titulo {
+    font-size: 1.8rem;
+  }
+  
+  .carrito-resumen .card-body {
+    padding: 1rem;
+  }
+  
+  .carrito-total {
+    font-size: 1.1rem;
+  }
+  
+  .carrito-btn-volver,
+  .carrito-btn-checkout,
+  .carrito-btn-galeria {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* ====== ANIMACIONES ====== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carrito-item {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.carrito-item:nth-child(n) {
+  animation-delay: calc(0.1s * var(--animation-order, 0));
+}

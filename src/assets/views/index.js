@@ -2,7 +2,7 @@
  * Archivo de exportaciones centralizadas para vistas
  * 
  * Permite importar múltiples vistas desde un solo lugar:
- * import { Home, IniciarSesion, RegistroUsuario, MiPerfil, Publicar, Galeria, Detalles } from './assets/views';
+ * import { Home, IniciarSesion, RegistroUsuario, MiPerfil, Publicar, Galeria, Detalles, Carrito } from './assets/views';
  */
 
 export { default as Home } from './Home/Home';
@@ -12,3 +12,4 @@ export { default as MiPerfil } from './MiPerfil/MiPerfil';
 export { default as Publicar } from './Publicar/Publicar';
 export { default as Galeria } from './Galeria/Galeria';
 export { default as Detalles } from './Detalles/Detalles';
+export { default as Carrito } from './Carrito/Carrito';

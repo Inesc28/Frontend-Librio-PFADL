@@ -36,6 +36,9 @@ export const LibrosProvider = ({ children }) => {
   const [libros, setLibros] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // ====== ESTADO DEL CARRITO ======
+  const [carrito, setCarrito] = useState([]);
 
   /**
    * Simula una llamada a la API para agregar un nuevo libro
@@ -215,19 +218,109 @@ export const LibrosProvider = ({ children }) => {
     setError(null);
   }, []);
 
+  // ====== FUNCIONES DEL CARRITO ======
+
+  /**
+   * Agregar un libro al carrito
+   * @param {Object} libro - El libro a agregar
+   * @param {number} cantidad - Cantidad a agregar (por defecto 1)
+   */
+  const agregarAlCarrito = useCallback((libro, cantidad = 1) => {
+    setCarrito(carritoActual => {
+      // Verificar si el libro ya está en el carrito
+      const itemExistente = carritoActual.find(item => item.libro.id === libro.id);
+      
+      if (itemExistente) {
+        // Si existe, actualizar la cantidad
+        return carritoActual.map(item =>
+          item.libro.id === libro.id
+            ? { ...item, cantidad: item.cantidad + cantidad }
+            : item
+        );
+      } else {
+        // Si no existe, agregarlo
+        return [...carritoActual, { libro, cantidad }];
+      }
+    });
+  }, []);
+
+  /**
+   * Eliminar un libro del carrito
+   * @param {string} libroId - ID del libro a eliminar
+   */
+  const eliminarDelCarrito = useCallback((libroId) => {
+    setCarrito(carritoActual => 
+      carritoActual.filter(item => item.libro.id !== libroId)
+    );
+  }, []);
+
+  /**
+   * Actualizar la cantidad de un libro en el carrito
+   * @param {string} libroId - ID del libro
+   * @param {number} nuevaCantidad - Nueva cantidad
+   */
+  const actualizarCantidadCarrito = useCallback((libroId, nuevaCantidad) => {
+    if (nuevaCantidad <= 0) {
+      eliminarDelCarrito(libroId);
+      return;
+    }
+    
+    setCarrito(carritoActual =>
+      carritoActual.map(item =>
+        item.libro.id === libroId
+          ? { ...item, cantidad: nuevaCantidad }
+          : item
+      )
+    );
+  }, [eliminarDelCarrito]);
+
+  /**
+   * Obtener el total del carrito
+   * @returns {number} Total del carrito
+   */
+  const obtenerTotalCarrito = useCallback(() => {
+    return carrito.reduce((total, item) => {
+      return total + (item.libro.precio * item.cantidad);
+    }, 0);
+  }, [carrito]);
+
+  /**
+   * Obtener la cantidad total de items en el carrito
+   * @returns {number} Cantidad total de items
+   */
+  const obtenerCantidadTotalCarrito = useCallback(() => {
+    return carrito.reduce((total, item) => total + item.cantidad, 0);
+  }, [carrito]);
+
+  /**
+   * Limpiar todo el carrito
+   */
+  const limpiarCarrito = useCallback(() => {
+    setCarrito([]);
+  }, []);
+
   // Valor del contexto con todos los datos y funciones
   const contextValue = {
     // Estado
     libros,
     isLoading,
     error,
+    carrito,
     
-    // Funciones CRUD
+    // Funciones CRUD de libros
     agregarLibro,
     obtenerLibros,
     actualizarLibro,
     eliminarLibro,
     obtenerLibroPorId,
+    
+    // Funciones del carrito
+    agregarAlCarrito,
+    eliminarDelCarrito,
+    actualizarCantidadCarrito,
+    obtenerTotalCarrito,
+    obtenerCantidadTotalCarrito,
+    limpiarCarrito,
     
     // Utilidades
     limpiarError

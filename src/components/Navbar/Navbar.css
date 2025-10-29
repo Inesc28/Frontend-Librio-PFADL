@@ -125,3 +125,48 @@
     border-bottom: none;
   }
 }
+
+/* ====== BADGE DEL CARRITO ====== */
+/* Estilos para el badge que muestra la cantidad de items en el carrito */
+.carrito-badge {
+  font-size: 0.65rem !important;         /* Tamaño pequeño para el badge */
+  min-width: 18px !important;            /* Ancho mínimo para números de dos dígitos */
+  height: 18px !important;               /* Altura fija */
+  line-height: 1 !important;             /* Centrado vertical del texto */
+  padding: 0.2rem 0.4rem !important;     /* Padding interno del badge */
+  background-color: #dc3545 !important;  /* Color rojo para destacar */
+  border: 2px solid #ffffff !important;  /* Borde blanco para contraste */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  transform: translate(-50%, -50%);       /* Centrado perfecto en la esquina */
+  animation: pulse 2s infinite;           /* Animación de pulso */
+}
+
+/* Animación de pulso para el badge cuando hay items */
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Estilos específicos para el enlace del carrito */
+.custom-navbar .custom-nav-link.position-relative {
+  position: relative;                     /* Necesario para el posicionamiento absoluto del badge */
+}
+
+/* ====== RESPONSIVE PARA EL BADGE ====== */
+@media (max-width: 991.98px) {
+  /* En móviles, posicionar el badge de manera diferente */
+  .carrito-badge {
+    position: static !important;          /* Posición estática en móviles */
+    transform: none !important;           /* Sin transformaciones */
+    margin-left: 0.5rem !important;       /* Margen a la izquierda del texto */
+    display: inline-block !important;     /* Mostrar en línea con el texto */
+    vertical-align: middle;               /* Alineación vertical media */
+  }
+}

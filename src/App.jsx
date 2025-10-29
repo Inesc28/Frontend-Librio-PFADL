@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Home, IniciarSesion, RegistroUsuario, MiPerfil, Publicar, Galeria, Detalles } from './assets/views'
+import { Home, IniciarSesion, RegistroUsuario, MiPerfil, Publicar, Galeria, Detalles, Carrito } from './assets/views'
 import { LibrosProvider } from './context/LibrosContext'
 import './App.css'
 
@@ -22,6 +22,7 @@ function App() {
           <Route path="/galeria" element={<Galeria />} />
           <Route path="/libros" element={<Galeria />} />
           <Route path="/detalles/:id" element={<Detalles />} />
+          <Route path="/carrito" element={<Carrito />} />
           
         </Routes>
       </Router>

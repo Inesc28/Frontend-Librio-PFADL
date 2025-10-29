@@ -6,8 +6,9 @@
  */
 
 import React, { useState } from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useLibros } from '../../context/LibrosContext';
 import './Navbar.css';
 
 /**
@@ -15,6 +16,10 @@ import './Navbar.css';
  * @returns {JSX.Element} Navbar responsiva con opciones condicionales
  */
 const CustomNavbar = () => {
+
+  // ====== CONTEXTO DEL CARRITO ======
+  const { obtenerCantidadTotalCarrito } = useLibros();
+  const cantidadCarrito = obtenerCantidadTotalCarrito();
 
   // ====== ESTADO DE AUTENTICACIÓN ======
   // TODO: Este estado debería venir de un contexto de autenticación global
@@ -71,8 +76,18 @@ const CustomNavbar = () => {
                 <Nav.Link as={Link} to="/galeria" className="custom-nav-link">
                   Galería
                 </Nav.Link>
-                <Nav.Link href="#carrito" className="custom-nav-link">
+                <Nav.Link as={Link} to="/carrito" className="custom-nav-link position-relative">
                   Carrito
+                  {/* Badge que muestra la cantidad de items en el carrito */}
+                  {cantidadCarrito > 0 && (
+                    <Badge 
+                      bg="danger" 
+                      pill 
+                      className="position-absolute top-0 start-100 translate-middle carrito-badge"
+                    >
+                      {cantidadCarrito > 99 ? '99+' : cantidadCarrito}
+                    </Badge>
+                  )}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/publicar" className="custom-nav-link">
                   Publicar
