@@ -1,18 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
+import IniciarSesion from "./views/IniciarSesion.jsx";
+import Detalles from "./views/Detalles.jsx";
+import Galeria from "./views/Galeria.jsx";
+import MiPerfil from "./views/MiPerfil.jsx";
+import Publicar from "./views/Publicar.jsx";
+import RegistroUsuario from "./views/RegistroUsuario.jsx";
+import Carrito from "./views/Carrito.jsx";
+import { LibrosProvider } from "./context/LibrosContext";
+import { CartProvider } from "./context/CartContext";
+import CustomNavbar from "../components/Navbar/Navbar.jsx";
+import Footer from "../components/Footer/Footer.jsx";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-     <h1>Hola mundo.. algo ahi</h1>
-     <p>seguimos probando</p>
-    
-    </>
-  )
+    <LibrosProvider>
+      <CartProvider>
+        <Router>
+          <div className="app-container">
+            <CustomNavbar />
+
+            <main className="content-wrap">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<IniciarSesion />} />
+                <Route path="/iniciar-sesion" element={<IniciarSesion />} />
+                <Route path="/registro" element={<RegistroUsuario />} />
+                <Route path="/registrarse" element={<RegistroUsuario />} />
+                <Route path="/mi-perfil" element={<MiPerfil />} />
+                <Route path="/perfil" element={<MiPerfil />} />
+                <Route path="/publicar" element={<Publicar />} />
+                <Route path="/vender" element={<Publicar />} />
+                <Route path="/galeria" element={<Galeria />} />
+                <Route path="/libros" element={<Galeria />} />
+                <Route path="/detalles/:id" element={<Detalles />} />
+                <Route path="/carrito" element={<Carrito />} />
+              </Routes>
+            </main>
+
+            <Footer />
+          </div>
+        </Router>
+      </CartProvider>
+    </LibrosProvider>
+  );
 }
 
-export default App
+export default App;
