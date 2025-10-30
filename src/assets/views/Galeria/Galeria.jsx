@@ -25,7 +25,6 @@ import './Galeria.css';
 
 /**
  * Componente funcional Galeria
- * @returns {JSX.Element} Página de galería de libros para usuarios autenticados
  */
 const Galeria = () => {
 

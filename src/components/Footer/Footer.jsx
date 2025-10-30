@@ -11,7 +11,6 @@ import './Footer.css';
 
 /**
  * Componente de pie de página
- * @returns {JSX.Element} Footer con información de marca
  */
 const Footer = () => {
     return (

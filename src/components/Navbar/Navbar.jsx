@@ -13,7 +13,6 @@ import './Navbar.css';
 
 /**
  * Componente de barra de navegación
- * @returns {JSX.Element} Navbar responsiva con opciones condicionales
  */
 const CustomNavbar = () => {
 

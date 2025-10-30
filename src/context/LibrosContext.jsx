@@ -30,7 +30,6 @@ export const useLibros = () => {
  * Proveedor del contexto de libros
  * @param {Object} props - Propiedades del componente
  * @param {React.ReactNode} props.children - Componentes hijos
- * @returns {JSX.Element} Proveedor del contexto
  */
 export const LibrosProvider = ({ children }) => {
   // Estado para almacenar la lista de libros

@@ -25,7 +25,6 @@ import './Publicar.css';
 
 /**
  * Componente funcional Publicar
- * @returns {JSX.Element} Página para publicar libros en Librio
  */
 const Publicar = () => {
 

@@ -23,7 +23,6 @@ import './Carrito.css';
 
 /**
  * Componente funcional Carrito
- * @returns {JSX.Element} Página del carrito de compras para usuarios autenticados
  */
 const Carrito = () => {
 

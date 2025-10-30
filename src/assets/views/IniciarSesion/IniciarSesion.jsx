@@ -21,7 +21,6 @@ import './IniciarSesion.css';
 
 /**
  * Componente funcional IniciarSesion
- * @returns {JSX.Element} Página de inicio de sesión de Librio
  */
 const IniciarSesion = () => {
     // Estados para manejar los campos del formulario

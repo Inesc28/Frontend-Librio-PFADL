@@ -22,7 +22,6 @@ import './RegistroUsuario.css';
 
 /**
  * Componente funcional RegistroUsuario
- * @returns {JSX.Element} Página de registro de usuarios de Librio
  */
 const RegistroUsuario = () => {
 

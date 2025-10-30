@@ -20,7 +20,6 @@ import './MiPerfil.css';
 
 /**
  * Componente funcional MiPerfil
- * @returns {JSX.Element} Página de perfil de usuario de Librio
  */
 const MiPerfil = () => {
 

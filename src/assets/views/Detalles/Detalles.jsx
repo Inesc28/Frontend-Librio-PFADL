@@ -23,7 +23,6 @@ import './Detalles.css';
 
 /**
  * Componente funcional Detalles
- * @returns {JSX.Element} Página de detalles del libro para usuarios autenticados
  */
 const Detalles = () => {
 
