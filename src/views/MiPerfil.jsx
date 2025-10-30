@@ -15,8 +15,7 @@ import {
   Button,
   Image
 } from 'react-bootstrap';
-import { Navbar, Footer } from '../../../components';
-import './MiPerfil.css';
+import '../assets/styles/MiPerfil.css';
 
 /**
  * Componente funcional MiPerfil
@@ -46,7 +45,6 @@ const MiPerfil = () => {
   return (
     <>
       {/* ====== NAVEGACIÓN ====== */}
-      <Navbar />
 
       {/* ====== CONTENIDO PRINCIPAL ====== */}
       <div className="perfil-container">
@@ -147,7 +145,6 @@ const MiPerfil = () => {
       </div>
 
       {/* ====== FOOTER ====== */}
-      <Footer />
     </>
   );
 };
