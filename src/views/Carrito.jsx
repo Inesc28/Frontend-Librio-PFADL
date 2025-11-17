@@ -1,7 +1,19 @@
 import React, { useState } from "react";
-import { Button, Alert, Container, Row, Col, Image } from "react-bootstrap";
+import {
+  Button,
+  Alert,
+  Container,
+  Row,
+  Col,
+  Image,
+  Spinner,
+} from "react-bootstrap";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../assets/styles/Carrito.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Carrito = () => {
   const {
@@ -14,6 +26,8 @@ const Carrito = () => {
 
   const [checkoutMessage, setCheckoutMessage] = useState(null);
   const [messageVariant, setMessageVariant] = useState("success");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const formatNumber = (num) => {
     return new Intl.NumberFormat("es-CO", {
@@ -26,18 +40,50 @@ const Carrito = () => {
   const total = calculateTotal();
 
   const handleCheckout = async () => {
+    setLoading(true);
     setCheckoutMessage(null);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
 
-      setCheckoutMessage("¡Compra realizada con éxito!");
+      if (!token || !userId) {
+        throw new Error("No estás autenticado.");
+      }
+
+      const librosParaEnviar = cart.map((item) => {
+        return {
+          libro_id: item.id_libros || item.id,
+          cantidad: item.count,
+          precio_unitario: item.precio,
+        };
+      });
+
+      const pedidoData = {
+        monto_total: total,
+        libros: librosParaEnviar,
+        usuario_id: userId,
+        estado: false,
+      };
+
+      await axios.post(`${API_URL}/pedidos`, pedidoData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setCheckoutMessage("¡Compra realizada con éxito! Redirigiendo...");
       setMessageVariant("success");
       clearCart();
+
+      setTimeout(() => {
+        navigate("/mi-perfil");
+      }, 2000);
     } catch (error) {
       console.error("Error during checkout:", error);
-      setCheckoutMessage("Error de red o el servidor no está disponible.");
+      setCheckoutMessage(
+        error.response?.data?.error || "Error al procesar el pedido."
+      );
       setMessageVariant("danger");
+      setLoading(false);
     }
   };
 
@@ -58,49 +104,54 @@ const Carrito = () => {
           </p>
         ) : (
           <div className="carrito-lista">
-            {cart.map((item) => (
-              <Row
-                key={item.id}
-                className="carrito-item-card align-items-center"
-              >
-                <Col xs={3} md={2}>
-                  <Image
-                    src={item.urlImagen}
-                    alt={item.titulo}
-                    className="carrito-item-img"
-                    onError={(e) => {
-                      e.target.src =
-                        "https://placehold.co/100x120/8b5a8c/ffffff?text=Sin+Imagen";
-                    }}
-                  />
-                </Col>
+            {cart.map((item, index) => {
+              const idReal = item.id_libros || item.id || index;
+              return (
+                <Row
+                  key={idReal}
+                  className="carrito-item-card align-items-center"
+                >
+                  <Col xs={3} md={2}>
+                    <Image
+                      src={item.urlImagen}
+                      alt={item.titulo}
+                      className="carrito-item-img"
+                      onError={(e) => {
+                        e.target.src =
+                          "https://placehold.co/100x120/8b5a8c/ffffff?text=Sin+Imagen";
+                      }}
+                    />
+                  </Col>
 
-                <Col xs={5} md={6} className="carrito-item-info">
-                  <h5 className="carrito-item-titulo">{item.titulo}</h5>
-                  <p className="carrito-item-precio">
-                    {formatNumber(item.precio * item.count)}
-                  </p>
-                </Col>
+                  <Col xs={5} md={6} className="carrito-item-info">
+                    <h5 className="carrito-item-titulo">{item.titulo}</h5>
+                    <p className="carrito-item-precio">
+                      {formatNumber(item.precio * item.count)}
+                    </p>
+                  </Col>
 
-                <Col xs={4} md={4} className="carrito-item-controles">
-                  <Button
-                    variant="dark"
-                    className="carrito-btn-control"
-                    onClick={() => decreaseQuantity(item.id)}
-                  >
-                    -
-                  </Button>
-                  <span className="carrito-item-cantidad">{item.count}</span>
-                  <Button
-                    variant="light"
-                    className="carrito-btn-control"
-                    onClick={() => increaseQuantity(item.id)}
-                  >
-                    +
-                  </Button>
-                </Col>
-              </Row>
-            ))}
+                  <Col xs={4} md={4} className="carrito-item-controles">
+                    <Button
+                      variant="dark"
+                      className="carrito-btn-control"
+                      onClick={() => decreaseQuantity(idReal)}
+                      disabled={loading}
+                    >
+                      -
+                    </Button>
+                    <span className="carrito-item-cantidad">{item.count}</span>
+                    <Button
+                      variant="light"
+                      className="carrito-btn-control"
+                      onClick={() => increaseQuantity(idReal)}
+                      disabled={loading}
+                    >
+                      +
+                    </Button>
+                  </Col>
+                </Row>
+              );
+            })}
 
             {cart.length > 0 && (
               <Row className="mt-5 justify-content-center text-center">
@@ -113,9 +164,22 @@ const Carrito = () => {
                   <Button
                     className="carrito-btn-pagar"
                     onClick={handleCheckout}
-                    disabled={cart.length === 0}
+                    disabled={cart.length === 0 || loading}
                   >
-                    Pagar
+                    {loading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        <span className="ms-2">Procesando...</span>
+                      </>
+                    ) : (
+                      "Pagar"
+                    )}
                   </Button>
                 </Col>
               </Row>

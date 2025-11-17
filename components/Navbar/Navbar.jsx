@@ -1,18 +1,16 @@
-import React, { useState } from "react";
 import { Container, Navbar, Nav, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCart } from "../../src/context/CartContext";
+import { useAuth } from "../../src/context/AuthContext";
 import "./Navbar.css";
 
 const CustomNavbar = () => {
   const { obtenerCantidadTotalCarrito } = useCart();
   const cantidadCarrito = obtenerCantidadTotalCarrito();
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    console.log("Cerrando sesión...");
-  };
+  const { isAuthenticated, logout, user } = useAuth();
+
+  const isAdmin = user && user.admin === true;
 
   return (
     <Navbar expand="lg" className="custom-navbar" fixed="top" variant="dark">
@@ -39,9 +37,17 @@ const CustomNavbar = () => {
                 <Nav.Link as={Link} to="/galeria" className="custom-nav-link">
                   Galería
                 </Nav.Link>
-                <Nav.Link as={Link} to="/publicar" className="custom-nav-link">
-                  Publicar
-                </Nav.Link>
+
+                {isAdmin && (
+                  <Nav.Link
+                    as={Link}
+                    to="/publicar"
+                    className="custom-nav-link"
+                  >
+                    Publicar
+                  </Nav.Link>
+                )}
+
                 <Nav.Link
                   as={Link}
                   to="/carrito"
@@ -54,18 +60,19 @@ const CustomNavbar = () => {
                     </Badge>
                   )}
                 </Nav.Link>
+
                 <Nav.Link
-                  as={Link}
-                  to="/"
                   className="custom-nav-link"
-                  onClick={handleLogout}
+                  onClick={logout}
+                  style={{ cursor: "pointer" }}
                 >
                   Cerrar Sesión
                 </Nav.Link>
+
                 <Nav.Link
                   as={Link}
                   to="/mi-perfil"
-                  className="custom-nav-link profile-icon"
+                  className="custom-nav-link profile-icon d-flex align-items-center"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -74,6 +81,21 @@ const CustomNavbar = () => {
                   >
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                   </svg>
+
+                  {isAdmin && (
+                    <span
+                      className="ms-2 badge rounded-pill"
+                      style={{
+                        backgroundColor: "#4a1942",
+                        color: "#d4a5d4",
+                        fontWeight: 600,
+                        paddingTop: "0.35em",
+                        paddingBottom: "0.35em",
+                      }}
+                    >
+                      Admin
+                    </span>
+                  )}
                 </Nav.Link>
               </>
             ) : (

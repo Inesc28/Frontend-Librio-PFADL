@@ -1,190 +1,155 @@
-/**
- * ========================================
- * ESTILOS DEL COMPONENTE INICIAR SESIÓN
- * ========================================
- * 
- * Archivo de estilos para la página de login de Librio.
- * Incluye estilos para formulario, campos y botones.
- * Mantiene consistencia con el diseño general de la aplicación.
- */
-
-/* ====== CONTENEDOR PRINCIPAL ====== */
 .login-container {
-  min-height: 100vh;                    /* Altura mínima de viewport completo */
-  background: transparent;              /* Fondo transparente para mostrar la imagen del body */
-  color: white;                         /* Texto blanco por defecto */
-  font-family: 'Arial', sans-serif;    /* Fuente principal consistente */
+  min-height: 100vh;
+  background: transparent;
+  color: white;
+  font-family: "Arial", sans-serif;
 }
 
-/* ====== CONTENIDO PRINCIPAL ====== */
 .login-main {
-  padding-top: 100px;                  /* Espacio para navbar fijo */
-  padding-bottom: 2rem;                /* Espacio inferior */
+  padding-top: 100px;
+  padding-bottom: 2rem;
 }
 
-/* ====== TARJETA DE LOGIN ====== */
 .login-card {
-  background:#4a1942;   /* Fondo morado traslúcido */
-  border: none;                        /* Sin borde */
-  border-radius: 15px;                 /* Bordes redondeados */
-  backdrop-filter: blur(10px);         /* Efecto blur para profundidad */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Sombra elegante */
+  background: #4a1942;
+  border: none;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* ====== LOGO EN LOGIN ====== */
 .login-logo {
-  width: 80px;                         /* Ancho del contenedor del logo */
-  height: 80px;                        /* Alto del contenedor del logo */
-  background: white; /* Gradiente morado */
-  border-radius: 50%;                  /* Forma circular */
-  display: flex;                       /* Flexbox para centrado */
-  align-items: center;                 /* Centrado vertical */
-  justify-content: center;             /* Centrado horizontal */
-  margin: 0 auto;                      /* Centrar horizontalmente */
-  overflow: hidden;                    /* Ocultar desborde */
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
-/* Imagen del logo en la página de login */
 .logo-image-large {
-  width: 100%;                          /* Tamaño de la imagen dentro del círculo */
-  height: 100%;                         /* Altura proporcional */
-  object-fit: contain;                 /* Mantener proporciones */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-/* ====== TÍTULO DE LOGIN ====== */
 .login-title {
-  font-size: 2rem;                     /* Tamaño de fuente grande */
-  font-weight: 300;                    /* Peso ligero */
-  color: white;                        /* Color blanco */
-  font-style: italic;                  /* Texto en cursiva */
-  margin-bottom: 2rem;                 /* Margen inferior */
+  font-size: 2rem;
+  font-weight: 300;
+  color: white;
+  font-style: italic;
+  margin-bottom: 2rem;
 }
 
-/* ====== ETIQUETAS DEL FORMULARIO ====== */
 .login-label {
   display: flex;
-  color: white;                        /* Color blanco para las etiquetas */
-  font-weight: 500;                    /* Peso medio */
-  margin-bottom: 0.5rem;              /* Margen inferior */
-  font-size: 1rem;                     /* Tamaño de fuente normal */
+  color: white;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
-/* ====== CAMPOS DE ENTRADA ====== */
 .login-input {
-  background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
-  border: 2px solid rgba(139, 90, 140, 0.3); /* Borde morado sutil */
-  border-radius: 8px;                  /* Bordes redondeados */
-  padding: 0.75rem 1rem;              /* Padding generoso */
-  font-size: 1rem;                    /* Tamaño de fuente */
-  color: #333;                         /* Color del texto */
-  transition: all 0.3s ease;          /* Transición suave */
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(139, 90, 140, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
 }
 
-/* Estado focus de los campos */
 .login-input:focus {
-  background: rgba(255, 255, 255, 1);  /* Fondo completamente blanco al enfocar */
-  border-color: #8b5a8c;               /* Borde morado al enfocar */
-  box-shadow: 0 0 0 0.2rem rgba(139, 90, 140, 0.25); /* Sombra de enfoque */
-  outline: none;                       /* Sin outline por defecto */
+  background: rgba(255, 255, 255, 1);
+  border-color: #8b5a8c;
+  box-shadow: 0 0 0 0.2rem rgba(139, 90, 140, 0.25);
+  outline: none;
 }
 
-/* Placeholder de los campos */
 .login-input::placeholder {
-  color: #999;                         /* Color gris para placeholder */
-  font-style: italic;                  /* Texto en cursiva */
+  color: #999;
+  font-style: italic;
 }
 
-/* ====== BOTÓN DE LOGIN ====== */
 .login-button {
   background: #eaeaea !important;
   color: black;
-  border: none !important;                                          /* Sin borde */
-  border-radius: 8px;                                              /* Bordes redondeados */
-  padding: 1rem 2rem;                                              /* Padding generoso */
-  font-size: 1.1rem;                                               /* Fuente ligeramente mayor */
-  font-weight: 600;                                                /* Peso semi-bold */
-  letter-spacing: 0.5px;                                           /* Espaciado entre letras */
-  transition: all 0.3s ease;                                       /* Transición suave */
-  box-shadow: 0 4px 15px rgba(139, 90, 140, 0.3);                /* Sombra */
+  border: none !important;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 90, 140, 0.3);
 }
 
-/* Estado hover del botón */
 .login-button:hover {
-  background: linear-gradient(135deg, #a67ba6, #c299c2) !important; /* Gradiente más claro */
-  transform: translateY(-2px);                                      /* Efecto de elevación */
-  box-shadow: 0 6px 20px rgba(139, 90, 140, 0.4);                 /* Sombra más intensa */
+  background: linear-gradient(135deg, #a67ba6, #c299c2) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 90, 140, 0.4);
 }
 
-/* Estado activo del botón */
 .login-button:active {
-  transform: translateY(0);             /* Volver a posición normal */
+  transform: translateY(0);
 }
 
-/* ====== TEXTO DE REGISTRO ====== */
 .register-text {
-  color: rgba(255, 255, 255, 0.8);     
-  margin: 0;                          
-  font-size: 0.95rem;               
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-size: 0.95rem;
 }
 
-/* Link de registro */
 .register-link {
-  color: #d4a5d4;                      
-  text-decoration: none;              
-  font-weight: 500;                   
-  transition: color 0.3s ease;      
+  color: #d4a5d4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-/* Estado hover del link */
 .register-link:hover {
-  color: #e6c7e6;                   
-  text-decoration: underline;         
+  color: #e6c7e6;
+  text-decoration: underline;
 }
 
-/* ====== DISEÑO RESPONSIVO ====== */
-/* Media query para tablets (768px y menores) */
 @media (max-width: 768px) {
   .login-main {
-    padding-top: 80px;                 /* Menos padding superior en tablets */
+    padding-top: 80px;
   }
 
   .login-title {
-    font-size: 1.75rem;               /* Título más pequeño */
+    font-size: 1.75rem;
   }
 
   .login-card .card-body {
-    padding: 2rem !important;          /* Menos padding en la tarjeta */
+    padding: 2rem !important;
   }
 
   .login-logo {
-    width: 70px;                       /* Logo más pequeño */
+    width: 70px;
     height: 70px;
   }
 }
 
-/* Media query para móviles (480px y menores) */
 @media (max-width: 480px) {
   .login-main {
-    padding-top: 70px;                 /* Aún menos padding en móviles */
-    padding-left: 1rem;                /* Padding lateral */
-    padding-right: 1rem;               /* Padding lateral */
+    padding-top: 70px;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .login-title {
-    font-size: 1.5rem;                /* Título más pequeño para móviles */
+    font-size: 1.5rem;
   }
 
   .login-card .card-body {
-    padding: 1.5rem !important;        /* Padding mínimo */
+    padding: 1.5rem !important;
   }
 
   .login-button {
-    font-size: 1rem;                  /* Fuente del botón más pequeña */
+    font-size: 1rem;
   }
 }
-
-/**
- * ========================================
- * FIN DE ESTILOS INICIAR SESIÓN
- * ========================================
- */

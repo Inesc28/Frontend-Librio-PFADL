@@ -1,29 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Button, Image, Spinner } from "react-bootstrap";
-import { useLibros } from "../context/LibrosContext";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Image,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import { useCart } from "../context/CartContext";
+import axios from "axios";
 import "../assets/styles/Detalles.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Detalles = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const { libros, isLoading: isLoadingLibros } = useLibros();
   const { addToCart } = useCart();
 
   const [libro, setLibro] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (libros.length > 0) {
-      const libroEncontrado = libros.find((item) => item.id === id);
-      if (libroEncontrado) {
-        setLibro(libroEncontrado);
-      } else {
-        navigate("/galeria");
+    const fetchDetalleLibro = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          throw new Error("No estás autenticado.");
+        }
+
+        const response = await axios.get(`${API_URL}/libros/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setLibro(response.data);
+      } catch (err) {
+        console.error("Error al cargar el libro:", err);
+        if (err.response && err.response.status === 404) {
+          setError("El libro que buscas no existe.");
+        } else {
+          setError("Hubo un problema al cargar el libro. Intenta nuevamente.");
+        }
+      } finally {
+        setLoading(false);
       }
+    };
+
+    if (id) {
+      fetchDetalleLibro();
     }
-  }, [id, libros, navigate]);
+  }, [id]);
 
   const handleAgregarAlCarrito = () => {
     if (libro) {
@@ -32,7 +67,7 @@ const Detalles = () => {
     }
   };
 
-  if (isLoadingLibros || !libro) {
+  if (loading) {
     return (
       <div className="detalles-loading-container">
         <Spinner animation="border" variant="light" />
@@ -40,6 +75,22 @@ const Detalles = () => {
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <Container className="py-5 text-center">
+        <Alert variant="danger">
+          <h4>Error</h4>
+          <p>{error}</p>
+          <Button variant="outline-danger" onClick={() => navigate("/galeria")}>
+            Volver a la galería
+          </Button>
+        </Alert>
+      </Container>
+    );
+  }
+
+  if (!libro) return null;
 
   const formatNumber = (num) => {
     return new Intl.NumberFormat("es-CO", {

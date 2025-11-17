@@ -16,48 +16,68 @@ const Publicar = () => {
     precio: "",
     urlImagen: "",
   });
+
   const [errors, setErrors] = useState({});
   const [mensaje, setMensaje] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLibroData((prev) => ({ ...prev, [name]: value }));
+
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }));
   };
 
   const validateForm = () => {
     const newErrors = {};
+
     if (!libroData.titulo.trim())
       newErrors.titulo = "El título es obligatorio.";
     if (!libroData.autor.trim()) newErrors.autor = "El autor es obligatorio.";
+
     if (!libroData.precio) newErrors.precio = "El precio es obligatorio.";
     else if (parseFloat(libroData.precio) <= 0)
       newErrors.precio = "El precio debe ser positivo.";
+
     if (!libroData.año) newErrors.año = "El año es obligatorio.";
-    else if (parseInt(libroData.año) > new Date().getFullYear())
-      newErrors.año = "El año no puede ser futuro.";
+    else if (parseInt(libroData.año) > new Date().getFullYear() + 1)
+      newErrors.año = "Año inválido.";
+
+    if (libroData.genero.length > 4) {
+      newErrors.genero = "Máximo 4 caracteres (ej: NOV, FIC, ART).";
+    }
+
     if (!libroData.urlImagen.trim())
       newErrors.urlImagen = "La URL de la imagen es obligatoria.";
+
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje(null);
+
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    const resultado = await agregarLibro({
-      ...libroData,
+    const datosParaEnviar = {
+      titulo: libroData.titulo,
+      autor: libroData.autor,
+      editorial: libroData.editorial,
+      anio_publicacion: parseInt(libroData.año),
+      genero: libroData.genero,
+      descripcion: libroData.descripcion,
       precio: parseFloat(libroData.precio),
-      año: parseInt(libroData.año),
-    });
+      url_img: libroData.urlImagen,
+    };
+
+    const resultado = await agregarLibro(datosParaEnviar);
 
     if (resultado.success) {
       setMensaje("¡Libro publicado exitosamente!");
+
       setLibroData({
         titulo: "",
         autor: "",
@@ -91,7 +111,6 @@ const Publicar = () => {
             )}
 
             <Form noValidate onSubmit={handleSubmit} className="mt-4">
-              {/* Usamos los campos que definiste, no los de la imagen nueva */}
               <Form.Group className="mb-3" controlId="formTitulo">
                 <Form.Label>Título</Form.Label>
                 <Form.Control
@@ -149,14 +168,19 @@ const Publicar = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formGenero">
-                <Form.Label>Género</Form.Label>
+                <Form.Label>Género (Abrevia a 4 letras)</Form.Label>
                 <Form.Control
                   type="text"
                   name="genero"
                   value={libroData.genero}
                   onChange={handleInputChange}
                   className="publicar-input"
+                  isInvalid={!!errors.genero}
+                  placeholder="Ej: NOV, LIT, FIC"
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.genero}
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formDescripcion">

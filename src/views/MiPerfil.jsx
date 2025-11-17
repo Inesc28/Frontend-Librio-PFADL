@@ -1,153 +1,189 @@
-/**
- * Componente MiPerfil - Página de perfil de usuario
- * 
- * Este componente renderiza la página de perfil del usuario en Librio.
- * Incluye información personal, foto de perfil y descripción del vendedor.
- * Utiliza componentes modulares (Navbar y Footer) y React Bootstrap.
- */
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
   Col,
   Card,
-  Button,
-  Image
-} from 'react-bootstrap';
-import '../assets/styles/MiPerfil.css';
+  Alert,
+  Spinner,
+  Table,
+} from "react-bootstrap";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
+import "../assets/styles/MiPerfil.css";
 
-/**
- * Componente funcional MiPerfil
- */
+const API_URL = import.meta.env.VITE_API_URL;
+
+const formatNumber = (num) => {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    minimumFractionDigits: 0,
+  }).format(num);
+};
+
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString("es-ES");
+};
+
 const MiPerfil = () => {
+  const { user } = useAuth();
+  const [pedidos, setPedidos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // ====== ESTADO DEL COMPONENTE ======
-  // Estado para manejar la información del usuario
-  const [usuario] = useState({
-    nombre: 'John Doe',                    // Nombre del usuario
-    email: 'john@gmail.com',               // Email del usuario
-    descripcion: 'Soy John Doe, y te doy la bienvenida a mi selección de libros en Librio. Mi objetivo no es solo vender libros, sino asegurar que cada volumen encuentre el lector adecuado que sepa apreciar su valor.'
-  });
+  const isAdmin = user && user.admin === true;
 
-  /**
-   * Maneja la carga de imagen de perfil
-   * TODO: Implementar funcionalidad de carga de imagen
-   */
-  const handleImageUpload = () => {
-    console.log('Funcionalidad de carga de imagen por implementar');
-    // TODO: Abrir selector de archivos
-    // TODO: Validar formato de imagen
-    // TODO: Subir imagen al servidor
-    // TODO: Actualizar estado con nueva imagen
+  useEffect(() => {
+    const fetchPedidos = async () => {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
+      if (!token || !userId) {
+        setError("No estás autenticado.");
+        setLoading(false);
+        return;
+      }
+
+      let endpointUrl = "";
+      if (isAdmin) {
+        endpointUrl = `${API_URL}/pedidos`;
+      } else {
+        endpointUrl = `${API_URL}/pedidosUsuario/${userId}`;
+      }
+
+      try {
+        const response = await axios.get(endpointUrl, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setPedidos(response.data || []);
+      } catch (err) {
+        console.error("Error al cargar pedidos:", err);
+
+        if (err.response && err.response.status === 404) {
+          setPedidos([]);
+        } else {
+          setError(
+            err.response?.data?.error || "No se pudieron cargar los pedidos."
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchPedidos();
+    }
+  }, [user, isAdmin]);
+
+  const renderPedidosSection = () => {
+    if (loading) {
+      return (
+        <div className="text-center mt-4">
+          <Spinner animation="border" variant="light" />
+          <p className="text-white-50">Buscando historial de pedidos...</p>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <Alert variant="danger" className="mt-4">
+          {error}
+        </Alert>
+      );
+    }
+
+    if (pedidos.length === 0) {
+      return (
+        <Alert variant="info" className="mt-4 text-center">
+          Aún no has realizado ningún pedido.
+        </Alert>
+      );
+    }
+
+    return (
+      <div className="pedidos-section mt-5">
+        <h3 className="perfil-nombre text-center mb-4">
+          {isAdmin ? "Historial General de Pedidos" : "Mis Pedidos"}
+        </h3>
+        <div className="pedidos-table-scroll-container">
+        <Table responsive hover className="pedidos-table" variant="dark">
+          <thead>
+            <tr>
+              <th>ID Pedido</th>
+              {isAdmin && <th>ID Usuario</th>}
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pedidos.map((pedido) => (
+              <tr key={pedido.id_pedido}>
+                <td>#{pedido.id_pedido}</td>
+                {isAdmin && <td>{pedido.usuario_id}</td>}
+                <td>{formatDate(pedido.fecha_pedido)}</td>
+                <td>{formatNumber(pedido.monto_total)}</td>
+                <td>
+                  <span
+                    className={`badge ${
+                      pedido.estado ? "bg-success" : "bg-warning text-dark"
+                    }`}
+                  >
+                    {pedido.estado ? "Completado" : "Pendiente"}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        </div>
+      </div>
+    );
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <>
-      {/* ====== NAVEGACIÓN ====== */}
-
-      {/* ====== CONTENIDO PRINCIPAL ====== */}
       <div className="perfil-container">
         <main className="perfil-main">
           <Container>
-
-            {/* ====== INFORMACIÓN DEL USUARIO ====== */}
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={6}>
-
-                {/* Tarjeta principal del perfil */}
                 <Card className="perfil-card">
                   <Card.Body className="p-4 p-md-5">
-
-                    {/* ====== SECCIÓN FOTO DE PERFIL ====== */}
                     <div className="text-center mb-4">
-                      {/* Contenedor circular para foto de perfil */}
-                      <div className="perfil-imagen-container">
-                        <div className="perfil-imagen">
-                          {/* Icono de usuario por defecto */}
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="user-icon"
-                          >
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* ====== INFORMACIÓN PERSONAL ====== */}
-                    <div className="text-center mb-4">
-                      {/* Nombre del usuario */}
                       <h2 className="perfil-nombre">
-                        {usuario.nombre}
+                        ¡Bienvenido de nuevo, {user.nombre}!
                       </h2>
+                      <p className="perfil-email">Tu correo es {user.email}.</p>
 
-                      {/* Email del usuario */}
-                      <p className="perfil-email">
-                        {usuario.email}
+                      <p className="text-white-50 mt-4">
+                        {isAdmin
+                          ? "A continuación, puedes ver todos los pedidos de la plataforma:"
+                          : "A continuación, puedes ver el historial de tus pedidos:"}
                       </p>
                     </div>
-
-                    {/* ====== SECCIÓN DE CONTENIDO PRINCIPAL ====== */}
-                    <Row className="align-items-center">
-
-                      {/* ====== CARGAR IMAGEN ====== */}
-                      <Col md={6} className="mb-3 mb-md-0">
-                        <div className="cargar-imagen-section">
-                          {/* Título de la sección */}
-                          <h4 className="seccion-titulo">
-                            Cargar Imagen
-                          </h4>
-
-                          {/* Botón de carga con icono */}
-                          <Button
-                            className="cargar-imagen-btn"
-                            onClick={handleImageUpload}
-                          >
-                            {/* Icono de subida */}
-                            <svg
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              className="upload-icon me-2"
-                            >
-                              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-                              <path d="M12,19L8,15H10.5V12H13.5V15H16L12,19Z" />
-                            </svg>
-                            {/* Texto del botón */}
-                            <span>Subir Imagen</span>
-                          </Button>
-                        </div>
-                      </Col>
-
-                      {/* ====== SOBRE MÍ ====== */}
-                      <Col md={6}>
-                        <div className="sobre-mi-section">
-                          {/* Título de la sección */}
-                          <h4 className="seccion-titulo">
-                            Sobre mí
-                          </h4>
-
-                          {/* Descripción del usuario */}
-                          <p className="descripcion-texto">
-                            {usuario.descripcion}
-                          </p>
-                        </div>
-                      </Col>
-                    </Row>
-
                   </Card.Body>
                 </Card>
+              </Col>
+            </Row>
+            <Row className="justify-content-center">
+              <Col xs={12} md={10} lg={10} xl={8}>
+                {renderPedidosSection()}
               </Col>
             </Row>
           </Container>
         </main>
       </div>
-
-      {/* ====== FOOTER ====== */}
     </>
   );
 };
 
-// Exportación por defecto del componente
 export default MiPerfil;

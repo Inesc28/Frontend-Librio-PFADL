@@ -1,16 +1,32 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Alert,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../assets/styles/RegistroUsuario.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const RegistroUsuario = () => {
   const [formData, setFormData] = useState({
-    nombreCompleto: "",
+    nombre: "",
+    apellido: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({});
+
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,8 +47,12 @@ const RegistroUsuario = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.nombreCompleto.trim()) {
-      newErrors.nombreCompleto = "El nombre completo es obligatorio.";
+    if (!formData.nombre.trim()) {
+      newErrors.nombre = "El nombre es obligatorio.";
+    }
+
+    if (!formData.apellido.trim()) {
+      newErrors.nombre = "El apellido es obligatorio.";
     }
 
     if (!formData.email.trim()) {
@@ -50,7 +70,7 @@ const RegistroUsuario = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
 
@@ -59,7 +79,26 @@ const RegistroUsuario = () => {
       return;
     }
 
-    console.log("Formulario válido, enviando datos:", formData);
+    setLoading(true);
+    setApiError(null);
+    setSuccess(false);
+    setErrors({});
+
+    try {
+      const response = await axios.post(`${API_URL}/usuarios`, formData);
+
+      setSuccess(true);
+      setFormData({ nombre: "", apellido: "", email: "", password: "" });
+    } catch (err) {
+      console.error("Error en el registro:", err);
+      setApiError(
+        err.response?.data?.message ||
+          err.message ||
+          "Ocurrió un error al registrar. Inténtalo de nuevo."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -85,19 +124,34 @@ const RegistroUsuario = () => {
                   </h2>
                   <Form noValidate onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
-                      <Form.Label className="registro-label">
-                        Nombre Completo
-                      </Form.Label>
+                      <Form.Label className="registro-label">Nombre</Form.Label>
                       <Form.Control
                         type="text"
-                        name="nombreCompleto"
-                        value={formData.nombreCompleto}
+                        name="nombre"
+                        value={formData.nombre}
                         onChange={handleChange}
-                        isInvalid={!!errors.nombreCompleto}
+                        isInvalid={!!errors.nombre}
                         className="registro-input"
                       />
                       <Form.Control.Feedback type="invalid">
-                        {errors.nombreCompleto}
+                        {errors.nombre}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label className="registro-label">
+                        Apellido
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="apellido"
+                        value={formData.apellido}
+                        onChange={handleChange}
+                        isInvalid={!!errors.apellido}
+                        className="registro-input"
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.apellido}
                       </Form.Control.Feedback>
                     </Form.Group>
 
@@ -133,13 +187,26 @@ const RegistroUsuario = () => {
                       </Form.Control.Feedback>
                     </Form.Group>
 
+                    {apiError && (
+                      <Alert variant="danger" className="mt-3">
+                        {apiError}
+                      </Alert>
+                    )}
+
+                    {success && (
+                      <Alert variant="success" className="mt-3">
+                        ¡Registro exitoso! Ya puedes iniciar sesión.
+                      </Alert>
+                    )}
+
                     <div className="d-grid mb-4">
                       <Button
                         type="submit"
                         className="registro-button"
                         size="lg"
+                        disabled={loading}
                       >
-                        Registrarse
+                        {loading ? "Registrando..." : "Registrarse"}
                       </Button>
                     </div>
 

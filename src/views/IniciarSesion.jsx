@@ -9,7 +9,11 @@ import {
   Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import "../assets/styles/IniciarSesion.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const IniciarSesion = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +23,9 @@ const IniciarSesion = () => {
 
   const [errors, setErrors] = useState({});
   const [mensajeError, setMensajeError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +53,7 @@ const IniciarSesion = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMensajeError("");
 
@@ -56,7 +63,47 @@ const IniciarSesion = () => {
       return;
     }
 
-    console.log("Formulario válido, intentando iniciar sesión con:", formData);
+    setLoading(true);
+    setErrors({});
+
+    try {
+      const response = await axios.post(`${API_URL}/login`, formData);
+
+      let token = null;
+
+      if (
+        response.data &&
+        typeof response.data.token === "object" &&
+        response.data.token !== null &&
+        typeof response.data.token.token === "string" &&
+        response.data.token.token.length > 0
+      ) {
+        token = response.data.token.token;
+      } else if (
+        response.data &&
+        typeof response.data.token === "string" &&
+        response.data.token.length > 0
+      ) {
+        token = response.data.token;
+      }
+
+      if (token) {
+        login(token);
+      } else {
+        setMensajeError(
+          "Respuesta inesperada del servidor (token malformado)."
+        );
+      }
+    } catch (err) {
+      console.error("Error en el inicio de sesión:", err);
+      setMensajeError(
+        err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Email o contraseña incorrectos."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -119,8 +166,13 @@ const IniciarSesion = () => {
                     </Form.Group>
 
                     <div className="d-grid mb-4">
-                      <Button type="submit" className="login-button" size="lg">
-                        Iniciar Sesión
+                      <Button
+                        type="submit"
+                        className="login-button"
+                        size="lg"
+                        disabled={loading}
+                      >
+                        {loading ? "Iniciando..." : "Iniciar Sesión"}
                       </Button>
                     </div>
 

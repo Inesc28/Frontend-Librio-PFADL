@@ -6,7 +6,7 @@
 
 .galeria-hero-section {
   position: relative;
-  min-height: 76vh;
+  min-height: 30vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,6 +35,7 @@
 }
 
 .galeria-titulo-pagina {
+  margin-top: 100px;
   font-weight: 600;
   font-size: 2.5rem;
   color: #fff;
@@ -126,4 +127,32 @@
 .galeria-btn-ver-mas:hover {
   background-color: #be75aa;
   border-color: #be75aa;
+}
+
+/* ====== ESTILOS DE PAGINACIÓN ====== */
+
+.pagination {
+  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(137, 49, 104, 0.5);
+  --bs-pagination-color: #e0e0e0;
+  --bs-pagination-bg: transparent;
+  --bs-pagination-border-color: #a95c8d;
+  --bs-pagination-hover-color: #ffffff;
+  --bs-pagination-hover-bg: #a95c8d;
+  --bs-pagination-hover-border-color: #a95c8d;
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-active-bg: #893168;
+  --bs-pagination-active-border-color: #893168;
+  --bs-pagination-disabled-color: rgba(255, 255, 255, 0.4);
+  --bs-pagination-disabled-bg: rgba(255, 255, 255, 0.05);
+  --bs-pagination-disabled-border-color: rgba(169, 92, 141, 0.3);
+}
+
+.pagination .page-link {
+  margin: 0 4px;
+  border-radius: 0.3rem;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+  border-radius: 0.3rem;
 }

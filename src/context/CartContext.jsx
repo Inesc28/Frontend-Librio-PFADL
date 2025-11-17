@@ -27,12 +27,17 @@ export const CartProvider = ({ children }) => {
     }
   }, [cart]);
 
+  const getId = (item) => item.id || item.id_libros;
+
   const addToCart = useCallback((product) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
+      const productId = getId(product);
+
+      const existingItem = prevCart.find((item) => getId(item) === productId);
+
       if (existingItem) {
         return prevCart.map((item) =>
-          item.id === product.id ? { ...item, count: item.count + 1 } : item
+          getId(item) === productId ? { ...item, count: item.count + 1 } : item
         );
       } else {
         return [...prevCart, { ...product, count: 1 }];
@@ -40,19 +45,21 @@ export const CartProvider = ({ children }) => {
     });
   }, []);
 
-  const increaseQuantity = useCallback((id) => {
+  const increaseQuantity = useCallback((idParaBuscar) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.id === id ? { ...item, count: item.count + 1 } : item
+        getId(item) === idParaBuscar ? { ...item, count: item.count + 1 } : item
       )
     );
   }, []);
 
-  const decreaseQuantity = useCallback((id) => {
+  const decreaseQuantity = useCallback((idParaBuscar) => {
     setCart((prevCart) =>
       prevCart
         .map((item) =>
-          item.id === id ? { ...item, count: item.count - 1 } : item
+          getId(item) === idParaBuscar
+            ? { ...item, count: item.count - 1 }
+            : item
         )
         .filter((item) => item.count > 0)
     );
@@ -60,7 +67,7 @@ export const CartProvider = ({ children }) => {
 
   const calculateTotal = useCallback(() => {
     return cart.reduce((acc, item) => acc + (item.precio || 0) * item.count, 0);
-  }, [cart]); 
+  }, [cart]);
 
   const clearCart = useCallback(() => {
     setCart([]);
@@ -75,7 +82,7 @@ export const CartProvider = ({ children }) => {
     addToCart,
     increaseQuantity,
     decreaseQuantity,
-    calculateTotal, 
+    calculateTotal,
     clearCart,
     obtenerCantidadTotalCarrito,
   };

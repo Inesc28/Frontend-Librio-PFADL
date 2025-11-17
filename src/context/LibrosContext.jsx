@@ -5,9 +5,11 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import librosData from "../views/libros.json";
+import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 const LibrosContext = createContext();
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const useLibros = () => {
   const context = useContext(LibrosContext);
@@ -22,36 +24,75 @@ export const LibrosProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    setIsLoading(true);
-    try {
-      setLibros(librosData);
-    } catch (e) {
-      console.error("Error al cargar datos iniciales:", e);
-      setError("No se pudieron cargar los libros.");
-    } finally {
-      setTimeout(() => setIsLoading(false), 500);
-    }
-  }, []);
+    const fetchLibros = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setLibros([]);
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get(`${API_URL}/libros`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setLibros(response.data);
+      } catch (err) {
+        console.error("Error al cargar libros:", err);
+        setError("No se pudieron cargar los libros.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLibros();
+  }, [user]);
 
   const agregarLibro = useCallback(async (nuevoLibroData) => {
     setIsLoading(true);
-    setError(null);
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const token = localStorage.getItem("token");
 
-      const nuevoLibro = {
-        id: Date.now().toString(),
-        ...nuevoLibroData,
-        fechaPublicacion: new Date().toISOString(),
-      };
+      if (!token) {
+        return { success: false, error: "No estás autenticado." };
+      }
 
-      setLibros((prevLibros) => [nuevoLibro, ...prevLibros]);
-      return true;
-    } catch (e) {
-      console.error("Error al agregar libro:", e);
-      setError("No se pudo publicar el libro. Inténtalo de nuevo.");
-      return false;
+      const response = await axios.post(`${API_URL}/libros`, nuevoLibroData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const libroTemporal = { ...nuevoLibroData, id_libros: Date.now() };
+      setLibros((prevLibros) => [...prevLibros, libroTemporal]);
+
+      return { success: true };
+    } catch (err) {
+      console.error("❌ Error al publicar libro (Axios):", err);
+
+      let mensajeError = "Error desconocido al publicar.";
+
+      if (err.response && err.response.data) {
+
+        mensajeError =
+          err.response.data.error ||
+          err.response.data.message ||
+          JSON.stringify(err.response.data);
+      } else {
+        mensajeError = err.message;
+      }
+
+      return { success: false, error: mensajeError };
     } finally {
       setIsLoading(false);
     }

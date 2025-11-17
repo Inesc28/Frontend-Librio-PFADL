@@ -1,211 +1,271 @@
-/**
- * ========================================
- * ESTILOS DEL COMPONENTE MI PERFIL
- * ========================================
- * 
- * Archivo de estilos para la página de perfil de usuario de Librio.
- * Mantiene consistencia visual con las demás páginas de la aplicación.
- * Incluye estilos para foto de perfil, información personal y secciones.
- */
-
-/* ====== CONTENEDOR PRINCIPAL ====== */
 .perfil-container {
-  min-height: 100vh;                    /* Altura mínima de viewport completo */
-  background: transparent;              /* Fondo transparente para mostrar imagen del body */
-  color: white;                         /* Texto blanco por defecto */
-  font-family: 'Arial', sans-serif;    /* Fuente principal consistente */
+  min-height: 100vh;
+  background: transparent;
+  color: white;
+  font-family: "Arial", sans-serif;
 }
 
-/* ====== CONTENIDO PRINCIPAL ====== */
 .perfil-main {
-  padding-top: 120px;                  /* Espacio para navbar fijo */
-  padding-bottom: 3rem;                /* Espacio inferior generoso */
+  padding-top: 120px;
+  padding-bottom: 3rem;
 }
 
-/* ====== TARJETA DEL PERFIL ====== */
 .perfil-card {
-  background:#4a1942;   /* Fondo morado traslúcido - consistente */
-  border: none;                        /* Sin borde */
-  border-radius: 20px;                 /* Bordes redondeados más pronunciados */
-  backdrop-filter: blur(15px);         /* Efecto blur para profundidad */
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); /* Sombra elegante y profunda */
+  background: #4a1942;
+  border: none;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* ====== IMAGEN DE PERFIL ====== */
-/* Contenedor principal de la imagen */
 .perfil-imagen-container {
-  display: flex;                       /* Flexbox para centrado */
-  justify-content: center;             /* Centrar horizontalmente */
-  margin-bottom: 2rem;                 /* Margen inferior */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
-/* Círculo contenedor de la imagen */
 .perfil-imagen {
-  width: 120px;                        /* Ancho del círculo */
-  height: 120px;                       /* Alto del círculo */
-  background: linear-gradient(135deg, #8b5a8c, #d4a5d4); /* Gradiente morado */
-  border-radius: 50%;                  /* Forma circular perfecta */
-  display: flex;                       /* Flexbox para centrar icono */
-  align-items: center;                 /* Centrado vertical */
-  justify-content: center;             /* Centrado horizontal */
-  border: 4px solid rgba(212, 165, 212, 0.3); /* Borde sutil */
-  box-shadow: 0 8px 25px rgba(139, 90, 140, 0.4); /* Sombra del círculo */
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #8b5a8c, #d4a5d4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid rgba(212, 165, 212, 0.3);
+  box-shadow: 0 8px 25px rgba(139, 90, 140, 0.4);
 }
 
-/* Icono de usuario dentro del círculo */
 .user-icon {
-  width: 60px;                         /* Ancho del icono */
-  height: 60px;                        /* Alto del icono */
-  color: white;                        /* Color blanco del icono */
-  opacity: 0.9;                        /* Ligera transparencia */
+  width: 60px;
+  height: 60px;
+  color: white;
+  opacity: 0.9;
 }
 
-/* ====== INFORMACIÓN PERSONAL ====== */
-/* Nombre del usuario */
 .perfil-nombre {
-  font-size: 2.2rem;                   /* Tamaño de fuente grande */
-  font-weight: 300;                    /* Peso ligero y elegante */
-  color: white;                        /* Color blanco */
-  font-style: italic;                  /* Texto en cursiva */
-  margin-bottom: 0.5rem;              /* Margen inferior pequeño */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra de texto */
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: white;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Email del usuario */
 .perfil-email {
-  font-size: 1.1rem;                   /* Tamaño medio */
-  color: rgba(212, 165, 212, 0.9);     /* Color morado claro */
-  margin-bottom: 0;                    /* Sin margen inferior */
-  font-weight: 400;                    /* Peso normal */
+  font-size: 1.1rem;
+  color: rgba(212, 165, 212, 0.9);
+  margin-bottom: 0;
+  font-weight: 400;
 }
 
-/* ====== SECCIONES DE CONTENIDO ====== */
-/* Títulos de las secciones */
 .seccion-titulo {
-  font-size: 1.3rem;                   /* Tamaño de fuente medio-grande */
-  font-weight: 500;                    /* Peso medio */
-  color: white;                        /* Color blanco */
-  margin-bottom: 1rem;                 /* Margen inferior */
-  text-align: center;                  /* Centrado en móviles */
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-/* ====== SECCIÓN CARGAR IMAGEN ====== */
-/* Contenedor de la sección */
 .cargar-imagen-section {
-  text-align: center;                  /* Centrar contenido */
+  text-align: center;
 }
 
-/* Botón de cargar imagen */
 .cargar-imagen-btn {
-  background: rgba(255, 255, 255, 0.9) !important; /* Fondo blanco semi-transparente */
-  border: 2px solid rgba(139, 90, 140, 0.3) !important; /* Borde morado sutil */
-  color: #333 !important;              /* Texto oscuro */
-  padding: 0.8rem 1.5rem;             /* Padding generoso */
-  border-radius: 12px;                 /* Bordes redondeados */
-  font-weight: 500;                    /* Peso medio */
-  transition: all 0.3s ease;          /* Transición suave */
-  display: flex;                       /* Flexbox para alinear icono y texto */
-  align-items: center;                 /* Centrado vertical */
-  justify-content: center;             /* Centrado horizontal */
-  gap: 0.5rem;                         /* Espacio entre icono y texto */
-  width: 100%;                         /* Ancho completo en su contenedor */
-  max-width: 200px;                    /* Ancho máximo */
-  margin: 0 auto;                      /* Centrar horizontalmente */
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid rgba(139, 90, 140, 0.3) !important;
+  color: #333 !important;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
 }
 
-/* Estado hover del botón */
 .cargar-imagen-btn:hover {
-  background: linear-gradient(135deg, #8b5a8c, #a67ba6) !important; /* Gradiente morado */
-  color: white !important;             /* Texto blanco */
-  border-color: #8b5a8c !important;   /* Borde morado */
-  transform: translateY(-2px);        /* Efecto de elevación */
-  box-shadow: 0 6px 20px rgba(139, 90, 140, 0.4); /* Sombra más intensa */
+  background: linear-gradient(135deg, #8b5a8c, #a67ba6) !important;
+  color: white !important;
+  border-color: #8b5a8c !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 90, 140, 0.4);
 }
 
-/* Icono de subida */
 .upload-icon {
-  width: 20px;                         /* Ancho del icono */
-  height: 20px;                        /* Alto del icono */
+  width: 20px;
+  height: 20px;
 }
 
-/* ====== SECCIÓN SOBRE MÍ ====== */
-/* Contenedor de la sección */
 .sobre-mi-section {
-  text-align: center;                  /* Centrar en móviles */
+  text-align: center;
 }
 
-/* Texto de descripción */
 .descripcion-texto {
-  font-size: 0.95rem;                  /* Tamaño de fuente ligeramente menor */
-  line-height: 1.6;                    /* Altura de línea para legibilidad */
-  color: rgba(255, 255, 255, 0.85);    /* Blanco semi-transparente */
-  margin-bottom: 0;                    /* Sin margen inferior */
-  text-align: justify;                 /* Texto justificado para mejor legibilidad */
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0;
+  text-align: justify;
 }
 
-/* ====== DISEÑO RESPONSIVO ====== */
-/* Media query para tablets (768px y menores) */
+/* ====== SECCIÓN DE PEDIDOS MODERNA ====== */
+.pedidos-section {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(5px);
+}
+
+.pedidos-table {
+  background-color: transparent !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pedidos-table thead {
+  background-color: transparent;
+}
+
+.pedidos-table th {
+  font-weight: 600;
+  color: #d4a5d4;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  padding: 1rem 0.9rem;
+  border: none;
+  border-bottom: 2px solid rgba(139, 90, 140, 0.4);
+}
+
+.pedidos-table td {
+  color: white;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  vertical-align: middle;
+  padding: 1.25rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.pedidos-table tbody tr:first-child td {
+  border-top: none;
+}
+
+.pedidos-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.pedidos-table tbody tr:hover {
+  background-color: rgba(139, 90, 140, 0.3) !important;
+  color: white !important;
+}
+
+.pedidos-table .badge {
+  font-size: 0.8rem;
+  padding: 0.5em 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+}
+
+.pedidos-table .bg-success {
+  background-color: rgba(40, 167, 69, 0.2) !important;
+  color: #5cb85c !important;
+  border: 1px solid rgba(40, 167, 69, 0.4);
+}
+
+.pedidos-table .bg-warning {
+  background-color: rgba(212, 165, 212, 0.15) !important;
+  color: #d4a5d4 !important;
+  border: 1px solid rgba(212, 165, 212, 0.4);
+}
+
+.pedidos-table .text-dark {
+  color: #d4a5d4 !important;
+}
+
+.pedidos-table-scroll-container {
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.pedidos-table-scroll-container .pedidos-table tbody tr:first-child td {
+  border-top: none;
+}
+
 @media (max-width: 768px) {
   .perfil-main {
-    padding-top: 100px;                /* Menos padding superior */
-    padding-left: 1rem;                /* Padding lateral */
-    padding-right: 1rem;               /* Padding lateral */
+    padding-top: 100px;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .perfil-card .card-body {
-    padding: 2rem !important;           /* Menos padding en la tarjeta */
+    padding: 2rem !important;
   }
 
   .perfil-imagen {
-    width: 100px;                      /* Imagen más pequeña */
+    width: 100px;
     height: 100px;
   }
 
   .user-icon {
-    width: 50px;                       /* Icono más pequeño */
+    width: 50px;
     height: 50px;
   }
 
   .perfil-nombre {
-    font-size: 1.8rem;                 /* Nombre más pequeño */
+    font-size: 1.8rem;
   }
 
   .seccion-titulo {
-    text-align: center;                /* Mantener centrado */
+    text-align: center;
   }
 
   .sobre-mi-section {
-    margin-top: 2rem;                  /* Espacio superior en móviles */
+    margin-top: 2rem;
+  }
+
+  .pedidos-section {
+    padding: 1rem;
+  }
+
+  .pedidos-table th,
+  .pedidos-table td {
+    padding: 0.7rem;
+    font-size: 0.9rem;
   }
 }
 
-/* Media query para móviles (480px y menores) */
 @media (max-width: 480px) {
   .perfil-main {
-    padding-top: 90px;                 /* Aún menos padding */
+    padding-top: 90px;
   }
 
   .perfil-card .card-body {
-    padding: 1.5rem !important;        /* Padding mínimo */
+    padding: 1.5rem !important;
   }
 
   .perfil-nombre {
-    font-size: 1.6rem;                 /* Nombre más pequeño para móviles */
+    font-size: 1.6rem;
   }
 
   .descripcion-texto {
-    font-size: 0.9rem;                 /* Texto más pequeño */
-    text-align: center;                /* Centrado en móviles pequeños */
+    font-size: 0.9rem;
+    text-align: center;
   }
 
   .cargar-imagen-btn {
-    font-size: 0.9rem;                 /* Texto del botón más pequeño */
-    padding: 0.7rem 1.2rem;           /* Padding reducido */
+    font-size: 0.9rem;
+    padding: 0.7rem 1.2rem;
+  }
+
+  .pedidos-table {
+    font-size: 0.85rem;
   }
 }
-
-/**
- * ========================================
- * FIN DE ESTILOS MI PERFIL
- * ========================================
- */

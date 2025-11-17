@@ -27,6 +27,3 @@ El Frontend de Librio está construido con las siguientes tecnologías clave, en
 
 ---
 
-### 📂 Estructura del Proyecto
-
-La organización de carpetas del proyecto sigue un enfoque modular:
