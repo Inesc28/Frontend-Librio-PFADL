@@ -113,7 +113,7 @@ const Carrito = () => {
                 >
                   <Col xs={3} md={2}>
                     <Image
-                      src={item.urlImagen}
+                      src={item.url_img}
                       alt={item.titulo}
                       className="carrito-item-img"
                       onError={(e) => {

@@ -34,6 +34,27 @@
   z-index: 2;
 }
 
+.galeria-hero-section .input-group .form-control {
+  background-color: white;
+  border-color: #a95c8d;
+  box-shadow: none !important;
+}
+
+.galeria-hero-section .input-group .form-control:focus {
+  border-color: #893168;
+  box-shadow: 0 0 0 0.25rem rgba(137, 49, 104, 0.25) !important;
+}
+
+.galeria-hero-section .input-group .input-group-text {
+  background-color: #a95c8d;
+  border-color: #a95c8d;
+}
+
+.galeria-hero-section .input-group .form-control::placeholder {
+  color: #a95c8d;
+  opacity: 0.7;
+}
+
 .galeria-titulo-pagina {
   margin-top: 100px;
   font-weight: 600;
